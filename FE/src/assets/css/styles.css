@@ -7,6 +7,41 @@
     src: url("../fonts/UVNThanhPho_R.eot?#iefix") format("embedded-opentype"), url("../fonts/UVNThanhPho_R.woff") format("woff"), url("../fonts/UVNThanhPho_R.ttf") format("truetype"), url("../fonts/UVNThanhPho_R.svg#UVNThanhPho_R") format("svg");
 }
 
+.box-button {
+    width: 239px;
+    height: 150px;
+    margin: 0px auto;
+    display: block;
+    margin-top: 20px;
+    background-color: #112141;
+}
+
+.button-youtube a {
+    background: url(../images/youtube-link.png) no-repeat left 0px;
+    display: block;
+    height: 40px;
+    margin: 2px auto 0;
+    width: 95px;
+    float: left;
+}
+
+.button-youtube a:hover {
+    background: url(../images/youtube-link-hover.png) no-repeat left 0px;
+}
+
+.button-fanpage a {
+    background: url(../images/youtube-link.png) no-repeat -105px 0px;
+    display: block;
+    float: left;
+    height: 40px;
+    margin: 2px auto 0;
+    width: 105px;
+}
+
+.button-fanpage a:hover {
+    background: url(../images/youtube-link-hover.png) no-repeat -105px 0px;
+}
+
 body {
     font: 12px/1.5 Tahoma, Geneva, sans-serif;
     padding: 0px;

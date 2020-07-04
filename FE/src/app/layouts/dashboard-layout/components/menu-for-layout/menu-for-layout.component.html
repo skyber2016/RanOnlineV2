@@ -1,0 +1,39 @@
+<div class="nav">
+    <ul class="nav-list">
+        <li *ngFor="let cate of menuLeft">
+            <a class="nav-link" href="#">Tin tức</a>
+        </li>
+
+        <li class="logo">
+            <a [routerLink]="['/']" routerLinkActive="router-link-active" style="
+          width: 150px;
+          height: 150px;
+          position: absolute;
+          margin-left: -50px;
+        " class="nav-link"></a>
+        </li>
+        <li *ngFor="let cate of menuRight">
+            <a class="nav-link" href="#">Tin tức</a>
+        </li>
+    </ul>
+
+    <ul class="navexpand-list pa">
+        <div *ngFor="let cate of menuLeft; let i = index">
+            <li [ngClass]="{ firstopt: i == 0 }">
+                <a *ngFor="let item of cate.items" class="navexpand-link" style="width: 100%;" [routerLink]="[item.url]" routerLinkActive="router-link-active" target="_blank">{{item.name}}</a>
+            </li>
+        </div>
+
+        <li class="navexpand-logo">
+            <h1>
+                <a [routerLink]="['/']" routerLinkActive="router-link-active" style="width: 150px; height: 150px; position: absolute;"></a>
+            </h1>
+        </li>
+        <div *ngFor="let cate of menuRight; let i = index">
+            <li [ngClass]="{bord: i == menuRight.length - 1}">
+                <a *ngFor="let item of cate.items" class="navexpand-link" style="width: 100%;" [routerLink]="[item.url]" routerLinkActive="router-link-active" target="_blank">{{item.name}}</a>
+            </li>
+        </div>
+
+    </ul>
+</div>
