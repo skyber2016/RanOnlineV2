@@ -1,0 +1,78 @@
+#boxEvent {
+    width: 491px;
+    height: 253px;
+    position: relative;
+    margin: 0px auto;
+    overflow: hidden;
+    padding: 0px;
+}
+
+#img {
+    width: 491px;
+    height: 253px;
+    margin: 0px auto;
+    padding: 0px;
+}
+
+#img li {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#img li.ActiveBanner {
+    z-index: 5;
+    opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+#img li a {
+    width: 491px;
+    height: 253px;
+    padding: 0;
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+#imgControl {
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 5;
+    padding: 0px;
+}
+
+#imgControl li {
+    position: relative;
+    float: left;
+    list-style: none;
+    padding: 0;
+}
+
+#imgControl li a {
+    padding: 0px 8px;
+    margin-right: 5px;
+    text-indent: -9999px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    background: right center no-repeat #112141;
+}
+
+#imgControl li a:hover,
+#imgControl li.ActiveBanner a {
+    padding: 0px 12px;
+    text-decoration: none;
+    background: right center no-repeat #f9c568;
+}
+
+#imgControl li.Last a {
+    background-image: none;
+}
