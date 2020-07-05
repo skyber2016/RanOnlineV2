@@ -22,7 +22,6 @@ namespace RanOnlineCore
         }
         public IHostingEnvironment HostingEnvironment { get; private set; }
         public IConfiguration Configuration { get; }
-        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
