@@ -9,5 +9,6 @@ namespace Framework
 {
     public class BadRequestException : Exception
     {
+        public BadRequestException(string message = "Validation error") : base(message) { }
     }
 }

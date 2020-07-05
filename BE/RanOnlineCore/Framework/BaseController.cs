@@ -1,20 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using RanOnlineCore.Framework;
 using System.Net;
 
 namespace Framework
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors]
     public class BaseController : ControllerBase
     {
-        public BaseController()
+        public BaseController(IOptions<GlobalConfig> config)
         {
-            this.CreateObjectContext();
+            this.CreateObjectContext(config.Value);
         }
         public ObjectContext CurrentObjectContext { get; internal set; }
-        protected virtual void CreateObjectContext()
+        protected virtual void CreateObjectContext(GlobalConfig config)
         {
-            CurrentObjectContext = ObjectContext.CreateContext(this);
+            CurrentObjectContext = ObjectContext.CreateContext(this, config);
+
         }
 
         protected IActionResult MakeResult(Result obj)

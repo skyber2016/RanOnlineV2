@@ -3,6 +3,7 @@ using log4net.Core;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PA.Caching;
+using RanOnlineCore.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +15,7 @@ namespace Framework
 {
     public class ObjectContext
     {
+        private GlobalConfig GlobalConfig { get; set; }
         public readonly Guid RequestId = Guid.NewGuid();
         public IDbConnection RanUser { get; set; }
         public IDbConnection RanMaster { get; set; }
@@ -81,20 +83,21 @@ namespace Framework
                 }
             }
         }
-        public static ObjectContext CreateContext(ControllerBase controller)
+        public static ObjectContext CreateContext(BaseController controller, GlobalConfig config)
         {
-            return new ObjectContext(controller);
+            return new ObjectContext(controller, config);
         }
 
-        private ControllerBase _controller;
+        private BaseController _controller;
         //private IDbInfoRepository _repo;
 
-        private ObjectContext(ControllerBase controller)
+        private ObjectContext(BaseController controller, GlobalConfig config)
         {
+            this.GlobalConfig = config;
             _controller = controller;
             //this.RanUser = new SqlConnection(ConfigurationManager.ConnectionStrings["connection"].ConnectionString);
             //this.RanGame = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanGame"].ConnectionString);
-            //this.RanMaster = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanMaster"].ConnectionString);
+            this.RanMaster = new SqlConnection(this.GlobalConfig.RanMaster);
             //_repo = ServiceLocator.Current.GetInstance<IDbInfoRepository>();
         }
     }

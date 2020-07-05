@@ -22,7 +22,7 @@ namespace RanOnlineCore
         }
         public IHostingEnvironment HostingEnvironment { get; private set; }
         public IConfiguration Configuration { get; }
-
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,6 +30,16 @@ namespace RanOnlineCore
                 Configuration.GetSection("GlobalConfig");
             services.Configure<GlobalConfig>(identitySettingsSection);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+
+                        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
+                    });
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +51,7 @@ namespace RanOnlineCore
             }
 
             app.UseMvc();
+            app.UseCors();
         }
     }
 }
