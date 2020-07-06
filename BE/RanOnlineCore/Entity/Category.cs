@@ -7,18 +7,13 @@ using System.Threading.Tasks;
 
 namespace RanOnlineCore.Entity
 {
-    [Table("Menu")]
-    public class Menu : BaseEntity
+    [Table("Category")]
+    public class Category : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
-        public long? ParentId { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Url { get; set; }
+        public virtual string Name { get; set; }
+        public virtual IEnumerable<News> News { get; set; }
     }
 }

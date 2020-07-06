@@ -22,6 +22,10 @@ namespace RanOnlineCore.Framework.Extensions
         {
             return builder.Where($"IsDeleted = @isDeleted").WithParameters(new { isDeleted = false});
         }
+        public static IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<Category> IsDeletedFalse(this IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<Category> builder)
+        {
+            return builder.Where($"IsDeleted = @isDeleted").WithParameters(new { isDeleted = false});
+        }
         public static IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<Menu> ById(this IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<Menu> builder,long id)
         {
             return builder.Where($"Id = @id").WithParameters(new { id });
