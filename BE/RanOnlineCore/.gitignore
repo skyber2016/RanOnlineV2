@@ -10,7 +10,7 @@ nupkg/
 .vs
 # Rider
 .idea
-
+published
 # User-specific files
 *.suo
 *.user

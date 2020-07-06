@@ -20,7 +20,7 @@ cd Deploy && mkdir BE
 cd ..
 cp -r ./BE/RanOnlineCore/bin/Debug/netcoreapp2.1/linux-x64/ ./Deploy/BE
 echo 'Building front-end'
-cd FE && npm run build && cd ..
+#cd FE && npm run build && cd ..
 cp -r ./FE/dist/FE/ ./Deploy
 echo 'zip file'
 7z a -tzip deploy.zip ./Deploy/*
@@ -40,5 +40,8 @@ plink -i $ec2_ppk $ec2_host "cd avenger && unzip deploy.zip"
 echo "Starting server"
 plink -i $ec2_ppk $ec2_host 'pm2 del api';
 plink -i $ec2_ppk $ec2_host 'cd ./avenger/BE/linux-x64 && pm2 start "dotnet RanOnlineCore.dll" --name "api"';
+plink -i $ec2_ppk $ec2_host 'pm2 del http-server';
+plink -i $ec2_ppk $ec2_host 'cd ./avenger/FE && sudo pm2 start http-server -p 8080';
+plink -i $ec2_ppk $ec2_host 'pm2 save';
 echo 'Press [Enter] key to continue...'
 read
