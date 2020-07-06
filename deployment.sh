@@ -20,7 +20,7 @@ cd Deploy && mkdir BE
 cd ..
 cp -r ./BE/RanOnlineCore/bin/Debug/netcoreapp2.1/linux-x64/ ./Deploy/BE
 echo 'Building front-end'
-#cd FE && npm run build && cd ..
+cd FE && npm run build && cd ..
 cp -r ./FE/dist/FE/ ./Deploy
 echo 'zip file'
 7z a -tzip deploy.zip ./Deploy/*
