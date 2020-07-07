@@ -128,6 +128,14 @@ namespace Framework
                     Code = HttpStatusCode.Unauthorized
                 };
             }
+            catch(NotFoundException ex)
+            {
+                return new Result<T>
+                {
+                    Message = ex.Message,
+                    Code = HttpStatusCode.NotFound
+                };
+            }
             catch (Exception ex)
             {
                 return new Result<T>

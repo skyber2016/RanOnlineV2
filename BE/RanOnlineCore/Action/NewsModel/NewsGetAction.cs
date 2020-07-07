@@ -1,42 +1,46 @@
 ﻿using Dapper.FastCrud;
 using Framework;
 using RanOnlineCore.Entity;
-using RanOnlineCore.Framework.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace RanOnlineCore.Action.NewsModel
 {
-    public class NewsGetAction : CommandBase<IEnumerable<dynamic>>
+    public class NewsGetAction : CommandBase<dynamic>
     {
-        private IEnumerable<Category> GetCategories(ObjectContext context)
+        public long CategoryId { get; set; }
+        public long? CurrentPage { get; set; } = 1;
+        private long? PageSize { get; set; } = 5;
+        private IEnumerable<News> GetNews(ObjectContext context)
         {
-            return context.RanMaster.Find<Category>(state => state.IsDeletedFalse());
-        }
-        protected override Result<IEnumerable<dynamic>> ExecuteCore(ObjectContext context)
-        {
-            var data = this.GetCategories(context).Select(cate =>
-            {
-                return new
-                {
-                    id = cate.Id,
-                    name = cate.Name,
-                    items = cate.News.Select(news =>
-                    {
-                        return new
-                        {
-                            id = news.Id,
-                            title = news.Title,
-                            short_text = news.ShortText,
-                            image = news.Image,
-                            author = news.Author
-                        };
+            var offset = (this.CurrentPage.Value -1) * this.PageSize.Value;
+            return context
+                .RanMaster
+                .Find<News>(
+                    state => 
+                    state
+                    .IsDeletedFalse()
+                    .Where($"CategoryId = @CategoryId")
+                    .WithParameters(new {
+                        this.CategoryId
                     })
-                };
-            });
-            return Success(data);
+                    .OrderByDesc()
+                    .Skip(offset)
+                    .Top(this.PageSize.Value)
+                    )
+                    ;
+        }
+        protected override Result<dynamic> ExecuteCore(ObjectContext context)
+        {
+
+            var listNews = this.GetNews(context);
+            return Success(listNews.Select(news => new {
+                id = news.Id,
+                title = news.Title,
+                image = news.Image,
+                short_text = news.ShortText,
+                created_date = news.CreatedDate.ToString("dd-MM-yyyy HH:mm")
+            }));
         }
     }
 }

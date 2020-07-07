@@ -13,29 +13,15 @@ namespace RanOnlineCore.Entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual long Id { get; set; }
-
-        [ForeignKey("CategoryId")]
-        public virtual Category Category { get; set; }
-
-        [Required]
-        public virtual string Title { get; set; }
-
-        [Required]
+        [ForeignKey("Category")]
         public virtual long CategoryId { get; set; }
-
-        [Required]
+        public virtual string Title { get; set; }
         public virtual string Author { get; set; }
-
-        [Required]
-        public virtual string ShortText { get; set; }
-
-        [Required]
-        public virtual string Image { get; set; }
-
-        [Required]
+        [ForeignKey("Content")]
         public virtual long ContentId { get; set; }
-
-        [ForeignKey("ContentId")]
+        public virtual string ShortText { get; set; }
+        public virtual string Image { get; set; }
+        public virtual Category Category { get; set; }
         public virtual Content Content { get; set; }
     }
 }

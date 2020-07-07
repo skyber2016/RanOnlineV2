@@ -48,9 +48,13 @@ namespace RanOnlineCore
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseCors();
         }
     }
 }

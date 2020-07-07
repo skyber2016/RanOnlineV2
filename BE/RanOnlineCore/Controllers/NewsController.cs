@@ -17,10 +17,16 @@ namespace RanOnlineCore.Controllers
         {
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{id}")]
+        public IActionResult GetNewsById(long id)
         {
-            var action = new NewsGetAction();
+            var action = new NewsGetContentAction { Id = id };
+            return MakeResult(action.Execute(CurrentObjectContext));
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody]NewsDeleteAction action)
+        {
             return MakeResult(action.Execute(CurrentObjectContext));
         }
     }

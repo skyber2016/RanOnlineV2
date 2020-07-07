@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MenuService } from "src/app/services/menu.service";
 import { MatDialogModule, MatDialog } from "@angular/material/dialog";
 import { PopupAddSubMenuComponent } from "../popup-add-sub-menu/popup-add-sub-menu.component";
+import { SpinnerService } from "src/app/services/spinner.service";
 @Component({
   selector: "app-menu-for-layout",
   templateUrl: "./menu-for-layout.component.html",
@@ -10,12 +11,17 @@ import { PopupAddSubMenuComponent } from "../popup-add-sub-menu/popup-add-sub-me
 export class MenuForLayoutComponent implements OnInit {
   menuLeft = [];
   menuRight = [];
-  constructor(private menuService: MenuService, public dialog: MatDialog) {}
+  constructor(
+    private menuService: MenuService,
+    public dialog: MatDialog,
+    private spinner: SpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.initMenu();
   }
   initMenu() {
+    this.spinner.show();
     this.menuLeft = [];
     this.menuRight = [];
     const menuData = this.menuService.getMenu().then((cate) => {
@@ -25,6 +31,7 @@ export class MenuForLayoutComponent implements OnInit {
       for (let index = cate.length / 2; index < cate.length; index++) {
         this.menuRight.push(cate[index]);
       }
+      this.spinner.hidden();
     });
   }
   deleteSubMenu(item) {
