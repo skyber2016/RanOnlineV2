@@ -13,8 +13,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PopupAddMenuComponent } from "./layouts/dashboard-layout/components/popup-add-menu/popup-add-menu.component";
 import { PopupAddSubMenuComponent } from "./layouts/dashboard-layout/components/popup-add-sub-menu/popup-add-sub-menu.component";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { OVERLAY_PROVIDERS } from "@angular/cdk/overlay";
-
+import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-page.component";
+import { CKEditorModule } from "ckeditor4-angular";
+import { NewsEditorPageComponent } from './pages/news-editor-page/news-editor-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,12 +27,15 @@ import { OVERLAY_PROVIDERS } from "@angular/cdk/overlay";
     MenuForLayoutComponent,
     PopupAddMenuComponent,
     PopupAddSubMenuComponent,
+    NewsDetailPageComponent,
+    NewsEditorPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    CKEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

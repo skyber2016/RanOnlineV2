@@ -18,4 +18,10 @@ export class NewsService {
       params: param,
     });
   }
+
+  getNewsDetail(param): Promise<any[]> {
+    return http.get(environment.host + "/news", {
+      params: param,
+    });
+  }
 }

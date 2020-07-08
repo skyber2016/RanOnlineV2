@@ -100,5 +100,51 @@ namespace Framework
             this.RanMaster = new SqlConnection(this.GlobalConfig.RanMaster);
             //_repo = ServiceLocator.Current.GetInstance<IDbInfoRepository>();
         }
+        public string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        private string RemoveUnicode(string text)
+        {
+            string[] arr1 = new string[] { "á", "à", "ả", "ã", "ạ", "â", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ă", "ắ", "ằ", "ẳ", "ẵ", "ặ",
+    "đ",
+    "é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ",
+    "í","ì","ỉ","ĩ","ị",
+    "ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ",
+    "ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự",
+    "ý","ỳ","ỷ","ỹ","ỵ",};
+            string[] arr2 = new string[] { "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
+    "d",
+    "e","e","e","e","e","e","e","e","e","e","e",
+    "i","i","i","i","i",
+    "o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o",
+    "u","u","u","u","u","u","u","u","u","u","u",
+    "y","y","y","y","y",};
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                text = text.Replace(arr1[i], arr2[i]);
+                text = text.Replace(arr1[i].ToUpper(), arr2[i].ToUpper());
+            }
+            return text;
+        }
+
+        public string UrlFriend(string input)
+        {
+            var array = new string[] {  "(", ")", "/", "\\", "[", "]" };
+            input =  this.RemoveUnicode(input.ToLower());
+            foreach (var item in array)
+            {
+                input = input.Replace(item, "");
+            }
+            return input.Replace(" ","-");
+        }
     }
 }

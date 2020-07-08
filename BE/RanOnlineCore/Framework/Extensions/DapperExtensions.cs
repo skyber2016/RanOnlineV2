@@ -37,6 +37,10 @@ namespace RanOnlineCore
         }
         public static T IsDeletedFalse<T>(this object baseEntity)
         {
+            if (baseEntity == null)
+            {
+                throw new NotFoundException();
+            }
             var response = (BaseEntity)baseEntity;
             if (!response.IsDeleted)
             {

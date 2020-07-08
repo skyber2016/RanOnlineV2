@@ -1,0 +1,32 @@
+<div class="session-left" *ngIf="news">
+    <div class="news-link">
+
+        <div class="news-content-tab">
+            <div class="wrap-content">
+                <div class="title-news">
+                    <h1>{{news.title}}</h1>
+                    <span class="title-date-news">Ngày đăng: {{news.created_date}}</span>
+                </div>
+
+                <div class="content-news">
+                    <h2><i>{{news.short_text}}!</i></h2><br>
+                    <div [innerHTML]="news.content"></div>
+                </div>
+
+                <div class="tabs-news news-req" style="margin-left: 0 !important;">Tin liên quan</div>
+                <ul class="list-news">
+                    <li *ngFor="let friend of news.friends">
+                        <h5>
+                            <span class="type-event">{{friend.category_name}}</span>
+                            <a [routerLink]="[friend.url]" routerLinkActive="router-link-active">{{friend.title}}</a>
+                            <span class="date-news">{{friend.created_date}}</span>
+                        </h5>
+                    </li>
+
+                </ul>
+                <br><br><br>
+            </div>
+        </div>
+        <!-- END Tin mới -->
+    </div>
+</div>

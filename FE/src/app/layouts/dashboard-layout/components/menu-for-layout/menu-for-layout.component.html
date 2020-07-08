@@ -1,7 +1,7 @@
 <div class="nav">
     <ul class="nav-list">
         <li *ngFor="let cate of menuLeft">
-            <a class="nav-link" href="#">{{cate.name}}</a>
+            <a class="nav-link" [routerLink]="['#']" routerLinkActive="router-link-active">{{cate.name}}</a>
         </li>
 
         <li class="logo">
@@ -13,7 +13,7 @@
         " class="nav-link"></a>
         </li>
         <li *ngFor="let cate of menuRight">
-            <a class="nav-link" href="#">{{cate.name}}</a>
+            <a class="nav-link" [routerLink]="['#']" routerLinkActive="router-link-active">{{cate.name}}</a>
         </li>
     </ul>
 
@@ -21,7 +21,7 @@
         <div *ngFor="let cate of menuLeft; let i = index">
             <li [ngClass]="{ firstopt: i == 0 }">
                 <div *ngFor="let item of cate.items">
-                    <a class="navexpand-link" style="width: 100%;" [routerLink]="[item.url]" routerLinkActive="router-link-active" target="_blank">{{item.name}}</a>
+                    <a class="navexpand-link" style="width: 100%;" [routerLink]="[item.url]" routerLinkActive="router-link-active">{{item.name}}</a>
                     <i style="cursor: pointer;" (click)="deleteSubMenu(item)" class="fa fa-trash"></i>
 
                 </div>
@@ -40,7 +40,7 @@
         <div *ngFor="let cate of menuRight; let i = index">
             <li [ngClass]="{bord: i == menuRight.length - 1}">
                 <div *ngFor="let item of cate.items">
-                    <a class="navexpand-link" style="width: 90%;" [routerLink]="[item.url]" routerLinkActive="router-link-active" target="_blank">{{item.name}} </a>
+                    <a class="navexpand-link" style="width: 90%;" [routerLink]="[item.url]" routerLinkActive="router-link-active">{{item.name}} </a>
                     <i style="cursor: pointer;" (click)="deleteSubMenu(item)" class="fa fa-trash"></i>
                 </div>
                 <a class="navexpand-link" style="width: 100%;cursor: pointer;" (click)="addSubMenu(cate)">Thêm</a>
