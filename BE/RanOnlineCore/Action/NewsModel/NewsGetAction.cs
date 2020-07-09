@@ -39,7 +39,8 @@ namespace RanOnlineCore.Action.NewsModel
                 title = news.Title,
                 image = news.Image,
                 short_text = news.ShortText,
-                created_date = news.CreatedDate.ToString("dd-MM-yyyy HH:mm")
+                created_date = news.CreatedDate.ToString("dd-MM-yyyy HH:mm"),
+                url = $"/news/{news.Id}/{context.UrlFriend(news.Title)}"
             }));
         }
     }

@@ -76,3 +76,17 @@
 #imgControl li.Last a {
     background-image: none;
 }
+
+.news-req {
+    color: #ccc;
+    font-weight: bold;
+    height: 40px !important;
+    line-height: 42px;
+    margin-left: -18px !important;
+    padding-left: 20px !important;
+    width: 713px !important;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-top: 40px !important;
+    background: url("../images/news-tab.png") no-repeat scroll center -10px !important;
+}

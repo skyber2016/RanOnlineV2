@@ -1,154 +1,151 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "FE": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/FE",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
-              "src/styles.scss",
-              "src/assets/css/styles.css"
-            ],
-            "scripts": [
-              "src/assets/js/jquery-1.8.2.min.js",
-              "src/assets/js/init.js",
-              "src/assets/js/slick.js",
-              "src/assets/js/easeljs-0.8.1.min.js",
-              "src/assets/js/tweenjs-0.6.1.min.js",
-              "src/assets/js/movieclip-0.8.1.min.js",
-              "src/assets/js/preloadjs-0.6.1.min.js",
-              "src/assets/js/Taigame.js",
-              "src/assets/js/canvas.js",
-              "src/assets/js/jquery.gosupopup.min.js",
-              "src/assets/js/jquery.fancybox.js",
-              "src/assets/js/jquery-ui.min.js",
-              "src/assets/js/fadegallery.js",
-              "src/assets/js/common.js",
-              "src/assets/js/balon-init.js",
-              "src/assets/js/popup-init.js",
-              "src/assets/js/jquery.nivo.slider.js",
-              "src/assets/js/myJS.js"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "FE": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "20mb",
-                  "maximumError": "50mb"
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/FE",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
+                        "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+                            "src/styles.scss",
+                            "src/assets/css/styles.css"
+                        ],
+                        "scripts": [
+                            "src/assets/js/jquery-1.8.2.min.js",
+                            "src/assets/js/init.js",
+                            "src/assets/js/slick.js",
+                            "src/assets/js/easeljs-0.8.1.min.js",
+                            "src/assets/js/tweenjs-0.6.1.min.js",
+                            "src/assets/js/movieclip-0.8.1.min.js",
+                            "src/assets/js/preloadjs-0.6.1.min.js",
+                            "src/assets/js/Taigame.js",
+                            "src/assets/js/canvas.js",
+                            "src/assets/js/jquery.gosupopup.min.js",
+                            "src/assets/js/jquery.fancybox.js",
+                            "src/assets/js/jquery-ui.min.js",
+                            "src/assets/js/fadegallery.js",
+                            "src/assets/js/common.js",
+                            "src/assets/js/balon-init.js",
+                            "src/assets/js/popup-init.js",
+                            "src/assets/js/jquery.nivo.slider.js",
+                            "src/assets/js/myJS.js"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "20mb",
+                                    "maximumError": "50mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "600kb",
+                                    "maximumError": "1000kb"
+                                }
+                            ]
+                        }
+                    }
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "600kb",
-                  "maximumError": "1000kb"
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "FE:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "FE:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "FE:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
+                        "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+                            "src/styles.scss"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "tsconfig.app.json",
+                            "tsconfig.spec.json",
+                            "e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "FE:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "FE:serve:production"
+                        }
+                    }
                 }
-              ]
             }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "FE:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "FE:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "FE:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
-              "src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "FE:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "FE:serve:production"
-            }
-          }
         }
-      }
+    },
+    "defaultProject": "FE",
+    "cli": {
+        "analytics": false
     }
-  },
-  "defaultProject": "FE",
-  "cli": {
-    "analytics": false
-  }
 }

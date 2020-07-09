@@ -17,10 +17,9 @@ namespace RanOnlineCore.Controllers
         {
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetNewsById(long id)
+        [HttpGet]
+        public IActionResult GetNewsById([FromQuery]NewsGetContentAction action)
         {
-            var action = new NewsGetContentAction { Id = id };
             return MakeResult(action.Execute(CurrentObjectContext));
         }
 

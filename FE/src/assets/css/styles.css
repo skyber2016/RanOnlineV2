@@ -42,15 +42,6 @@
     background: url(../images/youtube-link-hover.png) no-repeat -105px 0px;
 }
 
-body {
-    font: 12px/1.5 Tahoma, Geneva, sans-serif;
-    padding: 0px;
-    color: #777986;
-    min-width: 1000px;
-    margin: 0px auto;
-    background: url(../images/bgd_footer.jpg) no-repeat bottom center #f2f2f2;
-}
-
 li {
     list-style: none;
 }
