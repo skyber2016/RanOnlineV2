@@ -1,90 +1,88 @@
-﻿//using Dapper.FastCrud;
-//using Entity.RanMaster;
-//using Entity.RanUser;
-//using Entity.Response;
-//using Newtonsoft.Json;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Net;
-//using System.Net.Http;
-//using System.Web.Http;
-//using System.Web.Http.Controllers;
-//using System.Web.Http.Filters;
+﻿using Dapper.FastCrud;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
+using RanOnlineCore.Entity;
+using RanOnlineCore.Framework;
+using RanOnlineCore.Framework.Attributes;
+using RanOnlineCore.Framework.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 
-//namespace Framework
-//{
-//    public class AuthorizeAttribute : ActionFilterAttribute
-//    {
-//        private static readonly Type allowAnonymousAttrType = typeof(AllowAnonymousAttribute);
-//        private Type permissionAttr = typeof(PermisstionAttribute);
+namespace Framework
+{
+    public class AuthorizeAttribute : ActionFilterAttribute
+    {
+        private static readonly Type allowAnonymousAttrType = typeof(AllowAnonymousAttribute);
 
-//        private User GetUser(ObjectContext context, long userId)
-//        {
-//            return context.RanMaster.Get<User>(new User { UserId = userId });
-//        }
-//        public override void OnActionExecuting(HttpActionContext actionContext)
-//        {
-//            var controller = actionContext.ControllerContext.Controller as BaseController;
-//            var context = controller.CurrentObjectContext;
-//            try
-//            {
-//                if (Enumerable.Any<AllowAnonymousAttribute>((IEnumerable<AllowAnonymousAttribute>)actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>()))
-//                {
-//                    base.OnActionExecuting(actionContext);
-//                    return;
-//                }
-//                void UnAuthorize()
-//                {
-//                    context.Logger.Error($"[{DateTime.Now.ToString("HH:mm:ss")}]-[{context.ClientIP}]-[AUTH FAILED]");
-//                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-//                }
-//                IEnumerable<string> values;
-//                actionContext.Request.Headers.TryGetValues("token", out values);
-//                var tokenHeader = values?.FirstOrDefault();
-//                if (tokenHeader == null)
-//                {
-//                    UnAuthorize();
-//                    return;
-//                }
-//                var tokenDecrypt = context.Decrypt(tokenHeader);
-//                var token = JsonConvert.DeserializeObject<AuthResponse>(tokenDecrypt);
-//                if (DateTime.Now.Ticks > token.Expired)
-//                {
-//                    context.Logger.Error($"[{DateTime.Now.ToString("HH:mm:ss")}]-[{context.ClientIP}]-[EXPIRED]");
-//                    UnAuthorize();
-//                    return;
-//                }
-//                var user = this.GetUser(context, token.UserID);
-//                if (user == null)
-//                {
-//                    UnAuthorize();
-//                    return;
-//                }
-//                var role = actionContext.ActionDescriptor.GetCustomAttributes<PermisstionAttribute>().FirstOrDefault();
-//                if (role == null)
-//                {
-//                    role = new PermisstionAttribute(Role.Admin);
-//                }
-//                var access = role.Role;
-//                if (user.RoleId < (int)access)
-//                {
-//                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Forbidden);
-//                    context.Logger.Error($"[{DateTime.Now.ToString("HH:mm:ss")}]-[{context.ClientIP}]-[FORBIDDEN]-[{actionContext.Request.Method}:{actionContext.Request.RequestUri.ToString()}]-[{JsonConvert.SerializeObject(actionContext.ActionDescriptor)}]");
-//                    return;
-//                }
-//                else
-//                {
-//                    context.Logger.Trace($"[Auth]-[{DateTime.Now.ToString("HH:mm:ss")}]-[{context.ClientIP}]-[{user.IngameName}]-[LOGIN SUCCESS]");
-//                    base.OnActionExecuting(actionContext);
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                context.Logger.Error($"[Auth]-[{DateTime.Now.ToString("HH:mm:ss")}]-[{context.ClientIP}]-[{ex.Message}]");
-//                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-//            }
+        public override void OnActionExecuting(ActionExecutingContext actionContext)
+        {
+            var controller = actionContext.Controller as BaseController;
+            var context = controller.CurrentObjectContext;
+            var isUser = false;
+            try
+            {
+                var controllerActionDescriptor = actionContext.ActionDescriptor as ControllerActionDescriptor;
+                if (controllerActionDescriptor != null)
+                {
+                    var actionAttributes = controllerActionDescriptor.MethodInfo.GetCustomAttributes(inherit: true).FirstOrDefault(x=> x.GetType() == typeof(AllowAnonymousAttribute));
+                    if(actionAttributes != null)
+                    {
+                        base.OnActionExecuting(actionContext);
+                        return;
+                    }
+                    var userRole = controllerActionDescriptor.MethodInfo.GetCustomAttributes(inherit: true).FirstOrDefault(x => x.GetType() == typeof(UserRoleAttribute));
+                    isUser = userRole != null;
+                }
+                var header = actionContext.HttpContext.Request.Headers;
+                var auth = "Authorization";
+                var authorize = header.ContainsKey(auth);
+                if (!authorize)
+                {
+                    throw new NoAuthorizeException();
+                }
+                string token = header[auth];
+                if (token.StartsWith("Bearer"))
+                {
+                    token = token.Replace("Bearer ","");
+                }
+                UserAuth user = context.Decrypt<UserAuth>(token);
+                if (user == null)
+                {
+                    throw new NoAuthorizeException();
+                }
+                if (isUser)
+                {
+                    base.OnActionExecuting(actionContext);
+                    return;
+                }
+                if(user.Role != RoleEnum.ADMIN)
+                {
+                    throw new UnauthorizedAccessException();
+                }
 
-//        }
-//    }
-//}
+            }
+            catch (UnauthorizedAccessException)
+            {
+                actionContext.Result = controller.Forbid();
+                return;
+            }
+            catch (NoAuthorizeException)
+            {
+                actionContext.Result = controller.Unauthorized();
+                return;
+            }
+            catch (Exception)
+            {
+                actionContext.Result = controller.BadRequest();
+                return;
+            }
+
+        }
+    }
+}

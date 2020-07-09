@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Framework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ namespace RanOnlineCore.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             var action = new CategoryGetAction();
@@ -26,6 +28,7 @@ namespace RanOnlineCore.Controllers
 
         [HttpGet]
         [Route("news")]
+        [AllowAnonymous]
         public IActionResult GetNewsByCategoryId([FromQuery]NewsGetAction action)
         {
             return MakeResult(action.Execute(CurrentObjectContext));

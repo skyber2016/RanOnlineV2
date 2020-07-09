@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Framework\Enums\" />
     <Folder Include="Framework\Logging\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

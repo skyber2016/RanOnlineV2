@@ -1,4 +1,5 @@
 ﻿using Framework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RanOnlineCore.Action.MenuModel;
@@ -13,6 +14,7 @@ namespace RanOnlineCore.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             var action = new MenuGetAction();
@@ -20,12 +22,14 @@ namespace RanOnlineCore.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Post([FromBody]CreateMenuAction action)
         {
             return this.MakeResult(action.Execute(CurrentObjectContext));
         }
 
         [HttpDelete]
+        [AllowAnonymous]
         public IActionResult Delete([FromBody]DeleteMenuAction action)
         {
             return MakeResult(action.Execute(CurrentObjectContext));

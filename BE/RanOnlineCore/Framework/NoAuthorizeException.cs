@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace RanOnlineCore.Framework
 {
-    public class GlobalConfig
+    public class NoAuthorizeException : Exception
     {
-        public string RanMaster { get; set; }
-        public string RanUser { get; set; }
     }
 }

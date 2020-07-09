@@ -7,27 +7,28 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using RanOnlineCore.Action.NewsModel;
+using RanOnlineCore.Action.AuthAction;
 using RanOnlineCore.Framework;
 
 namespace RanOnlineCore.Controllers
 {
-    public class NewsController : BaseController
+    public class AuthController : BaseController
     {
-        public NewsController(IOptions<GlobalConfig> config) : base(config)
+        public AuthController(IOptions<GlobalConfig> config) : base(config)
         {
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Route("login")]
         [AllowAnonymous]
-        public IActionResult GetNewsById([FromQuery]NewsGetContentAction action)
+        public IActionResult Login([FromBody]LoginAction action)
         {
             return MakeResult(action.Execute(CurrentObjectContext));
         }
 
-        [HttpDelete]
-        [AllowAnonymous]
-        public IActionResult Delete([FromBody]NewsDeleteAction action)
+        [HttpPost]
+        [Route("register")]
+        public IActionResult Register([FromBody]RegisterAction action)
         {
             return MakeResult(action.Execute(CurrentObjectContext));
         }

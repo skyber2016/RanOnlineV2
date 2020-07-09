@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PA.Caching;
 using RanOnlineCore.Framework;
+using RanOnlineCore.Framework.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -64,8 +67,9 @@ namespace Framework
                 }
             }
         }
-        public string Decrypt(string cipher)
+        public T Decrypt<T>(string cipher)
         {
+            string json = "";
             using (var md5 = new MD5CryptoServiceProvider())
             {
                 using (var tdes = new TripleDESCryptoServiceProvider())
@@ -78,10 +82,11 @@ namespace Framework
                     {
                         byte[] cipherBytes = Convert.FromBase64String(cipher);
                         byte[] bytes = transform.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
-                        return UTF8Encoding.UTF8.GetString(bytes);
+                        json =  UTF8Encoding.UTF8.GetString(bytes);
                     }
                 }
             }
+            return JsonConvert.DeserializeObject<T>(json);
         }
         public static ObjectContext CreateContext(BaseController controller, GlobalConfig config)
         {
@@ -95,7 +100,7 @@ namespace Framework
         {
             this.GlobalConfig = config;
             _controller = controller;
-            //this.RanUser = new SqlConnection(ConfigurationManager.ConnectionStrings["connection"].ConnectionString);
+            this.RanUser = new SqlConnection(this.GlobalConfig.RanUser);
             //this.RanGame = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanGame"].ConnectionString);
             this.RanMaster = new SqlConnection(this.GlobalConfig.RanMaster);
             //_repo = ServiceLocator.Current.GetInstance<IDbInfoRepository>();
@@ -145,6 +150,84 @@ namespace Framework
                 input = input.Replace(item, "");
             }
             return input.Replace(" ","-");
+        }
+
+
+        public string MD5Encode(string input, int? maxLength = null)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                if(maxLength == null)
+                {
+                    return sb.ToString();
+                }
+                else
+                {
+                    return sb.ToString().Substring(0, maxLength.Value);
+                }
+            }
+        }
+        private const string initVector = "tu89geji340t89u2";
+
+        private const int keysize = 256;
+        public  string Encrypt(string Text, string Key)
+        {
+            byte[] initVectorBytes = Encoding.UTF8.GetBytes(initVector);
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(Text);
+            PasswordDeriveBytes password = new PasswordDeriveBytes(Key, null);
+            byte[] keyBytes = password.GetBytes(keysize / 8);
+            RijndaelManaged symmetricKey = new RijndaelManaged();
+            symmetricKey.Mode = CipherMode.CBC;
+            ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes);
+            MemoryStream memoryStream = new MemoryStream();
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+            cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+            cryptoStream.FlushFinalBlock();
+            byte[] Encrypted = memoryStream.ToArray();
+            memoryStream.Close();
+            cryptoStream.Close();
+            return Convert.ToBase64String(Encrypted);
+        }
+
+        public string Decrypt(string EncryptedText, string Key)
+        {
+            byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
+            byte[] DeEncryptedText = Convert.FromBase64String(EncryptedText);
+            PasswordDeriveBytes password = new PasswordDeriveBytes(Key, null);
+            byte[] keyBytes = password.GetBytes(keysize / 8);
+            RijndaelManaged symmetricKey = new RijndaelManaged();
+            symmetricKey.Mode = CipherMode.CBC;
+            ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes);
+            MemoryStream memoryStream = new MemoryStream(DeEncryptedText);
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+            byte[] plainTextBytes = new byte[DeEncryptedText.Length];
+            int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+            memoryStream.Close();
+            cryptoStream.Close();
+            return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+        }
+
+        public RoleEnum GetRole(string role)
+        {
+            if(role == RoleEnum.ADMIN.ToString())
+            {
+                return RoleEnum.ADMIN;
+            }
+            return RoleEnum.USER;
+        }
+        public DateTime CreateExpired()
+        {
+            return DateTime.Now.AddDays(1);
         }
     }
 }
