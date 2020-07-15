@@ -27,10 +27,6 @@ namespace RanOnlineCore
         {
             return builder.IsDeletedFalse().Where($"Id = @id").WithParameters(new { id });
         }
-        public static IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<T> Including<T>(this IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<T> builder)
-        {
-            return builder.Include<T>(state => state.IsDeletedFalse().LeftOuterJoin());
-        }
         public static IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<T> OrderByDesc<T>(this IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<T> builder)
         {
             return builder.OrderBy($"CreatedDate DESC");
@@ -47,10 +43,6 @@ namespace RanOnlineCore
                 return (T)baseEntity;
             }
             throw new NotFoundException();
-        }
-        public static ISqlRelationOptionsBuilder<T> IsDeletedFalse<T>(this ISqlRelationOptionsBuilder<T> builder)
-        {
-            return builder.Where($"IsDeleted = @isDeleted");
         }
         public static IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<Menu> ById(this IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<Menu> builder,long id)
         {

@@ -10,7 +10,6 @@ namespace Framework
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    [Authorize]
     public class BaseController : ControllerBase
     {
         public BaseController(IOptions<GlobalConfig> config)

@@ -1,6 +1,7 @@
 ﻿using log4net;
 using log4net.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using PA.Caching;
 using RanOnlineCore.Framework;
@@ -13,12 +14,13 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using ZaloDotNetSDK;
 
 namespace Framework
 {
     public class ObjectContext
     {
-        private GlobalConfig GlobalConfig { get; set; }
+        public GlobalConfig GlobalConfig { get; set; }
         public readonly Guid RequestId = Guid.NewGuid();
         public IDbConnection RanUser { get; set; }
         public IDbConnection RanMaster { get; set; }
@@ -31,6 +33,7 @@ namespace Framework
                 return MemoryCacheManager.Instance;
             }
         }
+        public ZaloClient ZaloClient { get; set; }
         public string EncryptPassword(string text)
         {
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
@@ -90,15 +93,40 @@ namespace Framework
         }
         public static ObjectContext CreateContext(BaseController controller, GlobalConfig config)
         {
+            
             return new ObjectContext(controller, config);
         }
-
+        private GlobalConfig MappingConfig()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(AppContext.BaseDirectory))
+                .AddJsonFile("appsettings.json", optional: true);
+            IConfigurationRoot configuration = builder.Build();
+            var localConfig = configuration.GetSection("GlobalConfig").GetChildren();
+            return new GlobalConfig
+            {
+                ZaloAccessToken = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.ZaloAccessToken))?.Value,
+                RanMaster = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RanMaster))?.Value,
+                RanUser = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RanUser))?.Value,
+                RabbitHost = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitHost))?.Value,
+                RabbitPassword = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitPassword))?.Value,
+                RabbitPort = int.Parse(localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitPort))?.Value),
+                RabbitUsername = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitUsername))?.Value,
+            };
+        }
         private BaseController _controller;
-        //private IDbInfoRepository _repo;
 
         private ObjectContext(BaseController controller, GlobalConfig config)
         {
-            this.GlobalConfig = config;
+            if (config == null)
+            {
+                this.GlobalConfig = MappingConfig();
+            }
+            else
+            {
+                this.GlobalConfig = config;
+            }
+            this.ZaloClient = new ZaloClient(this.GlobalConfig.ZaloAccessToken);
             _controller = controller;
             this.RanUser = new SqlConnection(this.GlobalConfig.RanUser);
             //this.RanGame = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanGame"].ConnectionString);

@@ -18,7 +18,10 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.1.0" />
     <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
+    <PackageReference Include="vng.zalo.ZaloDotNetSDK" Version="1.1.6" />
 	<None Include="appsettings.json" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
