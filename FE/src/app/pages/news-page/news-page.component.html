@@ -1,12 +1,6 @@
 <div class="session-left">
 
     <div class="news-link">
-        <ul class="tabs-news">
-            <li class="tab-news" *ngFor="let category of categories">
-                <h2><a class="tbnews" [ngClass]="{'active': category.isActive}" href="#" (click)="categoryClick(category)">{{category.name}}</a></h2>
-            </li>
-
-        </ul>
 
         <div class="news-content-tab" id="tab1-news">
             <div class="container-event-info event-vk" *ngFor="let item of news">
@@ -19,17 +13,16 @@
                     <h3>
                         <a [routerLink]="[item.url]" routerLinkActive="router-link-active">{{item.title}}</a>
                     </h3>
-                    <p class="event-date">Ngày đăng: <span>{{item.created_date}}</span></p>
-                    <div class="container-event-description">
+                    <!-- <p class="event-date">Ngày đăng: <span>{{item.created_date}}</span></p> -->
+                    <!-- <div class="container-event-description">
                         <h4>{{item.short_text}}</h4>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
             <div class="page">
                 <div class="top"><a href="#">Lên trên</a></div>
                 <div class="details"><a (click)="viewMore()">Xem thêm</a></div>
-                <div class="details"><a>Thêm bài viết</a></div>
             </div>
         </div>
         <!-- END Tin mới -->

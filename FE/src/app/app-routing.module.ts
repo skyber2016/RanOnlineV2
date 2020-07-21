@@ -19,10 +19,6 @@ const routes: Routes = [
         path: "news/:id/:title",
         component: NewsDetailPageComponent,
       },
-      {
-        path: "news/editor",
-        component: NewsEditorPageComponent,
-      },
     ],
   },
 ];

@@ -10,14 +10,16 @@
 
                 <div class="content-news">
                     <h2><i>{{news.short_text}}!</i></h2><br>
-                    <div [innerHTML]="news.content"></div>
+                    <div *ngFor="let item of news.content">
+                        <p *ngIf="item.type == 'text'" [innerHtml]="item.content"></p>
+                    </div>
                 </div>
 
                 <div class="tabs-news news-req" style="margin-left: 0 !important;">Tin liên quan</div>
                 <ul class="list-news">
                     <li *ngFor="let friend of news.friends">
                         <h5>
-                            <span class="type-event">{{friend.category_name}}</span>
+                            <span class="type-event">{{friend.author}}</span>
                             <a [routerLink]="[friend.url]" routerLinkActive="router-link-active">{{friend.title}}</a>
                             <span class="date-news">{{friend.created_date}}</span>
                         </h5>

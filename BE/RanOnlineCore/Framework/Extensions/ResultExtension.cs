@@ -16,5 +16,9 @@ namespace Framework.Extensions
             }
             throw new Exception(result.Message);
         }
+        public static DateTime ToDateTime(this string value)
+        {
+            return Convert.ToDateTime(value);
+        }
     }
 }

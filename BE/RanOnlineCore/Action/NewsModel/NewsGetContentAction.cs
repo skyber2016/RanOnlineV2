@@ -1,60 +1,45 @@
 ﻿using Dapper.FastCrud;
 using Framework;
+using Framework.Extensions;
+using Newtonsoft.Json.Linq;
 using RanOnlineCore.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static RanOnlineCore.Entity.ZaloArticle;
 
 namespace RanOnlineCore.Action.NewsModel
 {
     public class NewsGetContentAction : CommandBase<dynamic>
     {
-        public long? Id { get; set; }
-        private News GetNews(ObjectContext context)
+        public string Id { get; set; }
+        private Zalo<Article> GetNews(ObjectContext context)
         {
-            return context.RanMaster.Get(new News
-            {
-                Id = this.Id.Value
-            }, state =>
-                state.Include<Content>(s => s.LeftOuterJoin())
-            ).IsDeletedFalse<News>();
+            JObject json =  context.ZaloClient.getdetailArticle(this.Id);
+            return json.ToObject<Zalo<Article>>();
         }
-        private IEnumerable<News> GetNewsFriend(ObjectContext context,long categoryId,long newsId)
+        private IEnumerable<dynamic> GetNewsFriend(ObjectContext context)
         {
-            return context.RanMaster.Find<News>(state => state
-                .IsDeletedFalse()
-                .Where($"News.CategoryId = @categoryId")
-                .Where($"News.Id != @newsId")
-                .WithParameters(new { categoryId, newsId })
-                .OrderBy($"News.CreatedDate DESC")
-                .Top(5)
-                .Include<Category>(s => s.LeftOuterJoin())
-                );
+            using(var cmd = new NewsGetAction())
+            {
+                return cmd.Execute(context).ThrowIfFail();
+            }
         }
         protected override Result<dynamic> ExecuteCore(ObjectContext context)
         {
 
-            var news = this.GetNews(context);
-            var newFriend = this.GetNewsFriend(context, news.CategoryId,news.Id);
+            var news = this.GetNews(context).data;
+            var newFriend = this.GetNewsFriend(context);
             return Success(new
             {
-                id = news.Id,
-                title = news.Title,
-                short_text = news.ShortText,
-                created_date = news.CreatedDate.ToString("dd/MM/yyyy HH:mm"),
-                author = news.Author,
-                content = context.Base64Decode(news.Content.BodyText),
-                friends = newFriend.Select(x => {
-                    return new
-                    {
-                        id = x.Id,
-                        title = x.Title,
-                        category_name = x.Category.Name,
-                        created_date = x.CreatedDate.ToString("dd/MM/yyyy HH:mm"),
-                        url = $"/news/{x.Id}/{context.UrlFriend(x.Title)}"
-                    };
-                })
+                id = news.id,
+                title = news.title,
+                short_text = news.description,
+                created_date = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                author = news.author,
+                content = news.body,
+                friends = newFriend
             });
         }
     }

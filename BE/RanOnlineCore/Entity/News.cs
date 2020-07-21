@@ -7,21 +7,17 @@ using System.Threading.Tasks;
 
 namespace RanOnlineCore.Entity
 {
-    [Table("News")]
-    public class News : BaseEntity
+    public class News
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public virtual long Id { get; set; }
-        [ForeignKey("Category")]
-        public virtual long CategoryId { get; set; }
-        public virtual string Title { get; set; }
-        public virtual string Author { get; set; }
-        [ForeignKey("Content")]
-        public virtual long ContentId { get; set; }
-        public virtual string ShortText { get; set; }
-        public virtual string Image { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual Content Content { get; set; }
+        public string id { get; set; }
+        public string type { get; set; }
+        public string title { get; set; }
+        public string status { get; set; }
+        public int total_view { get; set; }
+        public int total_share { get; set; }
+        public long create_date { get; set; }
+        public long update_date { get; set; }
+        public string thumb { get; set; }
+        public string link_view { get; set; }
     }
 }

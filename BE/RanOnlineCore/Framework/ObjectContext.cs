@@ -2,10 +2,13 @@
 using log4net.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using PA.Caching;
 using RanOnlineCore.Framework;
 using RanOnlineCore.Framework.Enums;
+using SqlKata.Compilers;
+using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -130,9 +133,11 @@ namespace Framework
             _controller = controller;
             this.RanUser = new SqlConnection(this.GlobalConfig.RanUser);
             //this.RanGame = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanGame"].ConnectionString);
-            this.RanMaster = new SqlConnection(this.GlobalConfig.RanMaster);
-            //_repo = ServiceLocator.Current.GetInstance<IDbInfoRepository>();
+            this.RanMaster = new MySqlConnection(this.GlobalConfig.RanMaster);
+            var compiler = new MySqlCompiler();
+            this.Factory = new QueryFactory(this.RanMaster, compiler);
         }
+        public QueryFactory Factory { get; set; }
         public string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
