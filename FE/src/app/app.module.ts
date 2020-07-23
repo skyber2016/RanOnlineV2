@@ -15,7 +15,8 @@ import { PopupAddSubMenuComponent } from "./layouts/dashboard-layout/components/
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-page.component";
 import { CKEditorModule } from "ckeditor4-angular";
-import { NewsEditorPageComponent } from './pages/news-editor-page/news-editor-page.component';
+import { NewsEditorPageComponent } from "./pages/news-editor-page/news-editor-page.component";
+import { LoginPageComponent } from "./pages/login-page/login-page.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { NewsEditorPageComponent } from './pages/news-editor-page/news-editor-pa
     PopupAddSubMenuComponent,
     NewsDetailPageComponent,
     NewsEditorPageComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,6 @@ import { NewsEditorPageComponent } from './pages/news-editor-page/news-editor-pa
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [PopupAddSubMenuComponent],
+  entryComponents: [PopupAddSubMenuComponent, LoginPageComponent],
 })
 export class AppModule {}

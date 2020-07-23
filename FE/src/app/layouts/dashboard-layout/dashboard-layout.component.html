@@ -7,11 +7,14 @@
         </div>
     </div>
 </div>
-<div class="wrap-bg">
+<div class="wrap-bg dashboard-container">
     <div id="header">
         <div class="container">
             <app-menu-for-layout></app-menu-for-layout>
             <!-- nav close -->
+        </div>
+        <div class="user-info" *ngIf="fullName">
+            <span><strong>{{fullName}}</strong>, <a (click)="logout()">Đăng xuất</a></span>
         </div>
     </div>
 

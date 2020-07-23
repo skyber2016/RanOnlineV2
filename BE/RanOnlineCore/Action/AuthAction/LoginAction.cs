@@ -37,40 +37,21 @@ namespace RanOnlineCore.Action.AuthAction
         {
             return context.RanMaster.Get(new User { Id = userId });
         }
-        private User InsertRole(ObjectContext context,User user)
-        {
-            context.RanMaster.Insert<User>(user);
-            return user;
-        }
         protected override Result<dynamic> ExecuteCore(ObjectContext context)
         {
             var user = this.GetUser(context);
             if (user == null) {
                 throw new BadRequestException(NotCorrect);
             }
-            var userRole = this.GetRoleUser(context, user.UserNum);
-            if(userRole == null)
-            {
-                userRole = new User
-                {
-                    Id = user.UserNum,
-                    Username = user.UserName,
-                    ChaName = user.ChaName,
-                    Point = 0,
-                    Role = RoleEnum.USER.ToString(),
-                };
-                userRole = InsertRole(context, userRole);
-            }
+            
             var token = context.Encrypt(new UserAuth
             {
                 UserId = user.UserNum,
                 Username = user.UserName,
-                Role = context.GetRole(userRole.Role),
                 Expired = context.CreateExpired()
             });
             return Success(new {
-                token,
-                role = userRole.Role
+                token
             });
         }
     }

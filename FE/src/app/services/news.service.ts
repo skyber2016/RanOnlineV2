@@ -9,6 +9,12 @@ import { config } from "rxjs";
 export class NewsService {
   constructor() {}
 
+  getCategory(param): Promise<any[]> {
+    return http.get(environment.host + "/category", {
+      params: param,
+    });
+  }
+
   getNews(param): Promise<any[]> {
     return http.get(environment.host + "/news", {
       params: param,

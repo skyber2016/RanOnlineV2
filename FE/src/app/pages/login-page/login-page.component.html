@@ -1,0 +1,15 @@
+<form>
+    <div class="login-container">
+        <h2>Đăng nhập</h2>
+        <div class="form-group">
+            <input type="text" #username class="form-control" placeholder="Tên tài khoản">
+        </div>
+        <div class="form-group">
+            <input type="password" #password class="form-control" placeholder="Mật khẩu">
+        </div>
+        <div class="message">
+            {{message}}
+        </div>
+        <button type="button" (click)="login()" class="btn btn-primary w-100">Đăng nhập</button>
+    </div>
+</form>

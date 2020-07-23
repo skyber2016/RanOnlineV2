@@ -71,3 +71,15 @@
         opacity: 0;
     }
 }
+
+.dashboard-container {
+    .user-info {
+        text-align: right;
+        padding-top: 20px;
+        color: white;
+        padding-right: 10px;
+        a {
+            cursor: pointer;
+        }
+    }
+}

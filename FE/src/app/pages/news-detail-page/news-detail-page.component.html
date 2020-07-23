@@ -10,9 +10,7 @@
 
                 <div class="content-news">
                     <h2><i>{{news.short_text}}!</i></h2><br>
-                    <div *ngFor="let item of news.content">
-                        <p *ngIf="item.type == 'text'" [innerHtml]="item.content"></p>
-                    </div>
+                    <p [innerHtml]="news.content"></p>
                 </div>
 
                 <div class="tabs-news news-req" style="margin-left: 0 !important;">Tin liên quan</div>

@@ -5,6 +5,7 @@ import { DashboardLayoutComponent } from "./layouts/dashboard-layout/dashboard-l
 import { NewsPageComponent } from "./pages/news-page/news-page.component";
 import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-page.component";
 import { NewsEditorPageComponent } from "./pages/news-editor-page/news-editor-page.component";
+import { LoginPageComponent } from "./pages/login-page/login-page.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
         component: NewsDetailPageComponent,
       },
     ],
+  },
+  {
+    path: "login",
+    component: LoginPageComponent,
   },
 ];
 

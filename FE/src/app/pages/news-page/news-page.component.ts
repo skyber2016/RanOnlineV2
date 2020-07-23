@@ -19,24 +19,45 @@ export class NewsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.getNews();
+    this.newsService.getCategory({}).then((result) => {
+      this.categories = result.map((x, index) => {
+        x.isActive = index == 0;
+        if (x.isActive) {
+          this.currentCategory = x.id;
+        }
+        return x;
+      });
+      if (this.categories.length > 0) {
+        this.getNews(this.categories[0].id);
+      }
+    });
   }
 
-  getNews() {
+  getNews(categoryId) {
     this.spinner.show();
     this.newsService
       .getNews({
         currentPage: this.currentPage++,
+        categoryId,
       })
       .then((response) => {
         this.spinner.hidden();
         this.news = this.news.concat(response);
-        console.log(response);
+        console.log(this);
       })
       .catch(console.log);
   }
 
   viewMore() {
-    this.getNews();
+    this.getNews(this.currentCategory);
+  }
+  categoryClick(item) {
+    this.currentPage = 1;
+    this.currentCategory = item.id;
+    this.categories = this.categories.map((x) => {
+      x.isActive = x.id == item.id;
+      return x;
+    });
+    this.getNews(this.currentCategory);
   }
 }
