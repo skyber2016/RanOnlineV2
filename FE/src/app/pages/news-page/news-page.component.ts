@@ -58,6 +58,7 @@ export class NewsPageComponent implements OnInit {
       x.isActive = x.id == item.id;
       return x;
     });
+    this.news = [];
     this.getNews(this.currentCategory);
   }
 }

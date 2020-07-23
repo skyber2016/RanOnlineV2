@@ -1,4 +1,5 @@
-﻿using Dapper.FastCrud;
+﻿using Dapper;
+using Dapper.FastCrud;
 using Framework;
 using RanOnlineCore.Entity;
 using SqlKata.Execution;
@@ -13,7 +14,7 @@ namespace RanOnlineCore.Action.NewsModel
     {
         private IEnumerable<Category> GetCategories(ObjectContext context)
         {
-            return context.Factory.Query("wp_terms").Get<Category>();
+            return context.RanMaster.Query<Category>("select wp_terms.* from wp_term_taxonomy left join wp_terms on wp_terms.term_id = wp_term_taxonomy.term_id where wp_term_taxonomy.taxonomy = 'category'");
         }
         protected override Result<IEnumerable<dynamic>> ExecuteCore(ObjectContext context)
         {
