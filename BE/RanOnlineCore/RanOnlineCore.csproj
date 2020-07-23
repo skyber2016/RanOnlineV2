@@ -24,7 +24,6 @@
     <PackageReference Include="SqlKata" Version="2.2.0" />
     <PackageReference Include="SqlKata.Execution" Version="2.2.0" />
     <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
-    <PackageReference Include="vng.zalo.ZaloDotNetSDK" Version="1.1.6" />
 	<None Include="appsettings.json" CopyToPublishDirectory="Always" />
   </ItemGroup>
 

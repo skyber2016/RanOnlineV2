@@ -1,7 +1,4 @@
-﻿using log4net;
-using log4net.Core;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using PA.Caching;
@@ -10,14 +7,12 @@ using RanOnlineCore.Framework.Enums;
 using SqlKata.Compilers;
 using SqlKata.Execution;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using ZaloDotNetSDK;
 
 namespace Framework
 {
@@ -36,7 +31,6 @@ namespace Framework
                 return MemoryCacheManager.Instance;
             }
         }
-        public ZaloClient ZaloClient { get; set; }
         public string EncryptPassword(string text)
         {
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
@@ -115,6 +109,7 @@ namespace Framework
                 RabbitPassword = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitPassword))?.Value,
                 RabbitPort = int.Parse(localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitPort))?.Value),
                 RabbitUsername = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitUsername))?.Value,
+                WordPress = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.WordPress))?.Value,
             };
         }
         private BaseController _controller;
@@ -129,7 +124,6 @@ namespace Framework
             {
                 this.GlobalConfig = config;
             }
-            this.ZaloClient = new ZaloClient(this.GlobalConfig.ZaloAccessToken);
             _controller = controller;
             this.RanUser = new SqlConnection(this.GlobalConfig.RanUser);
             //this.RanGame = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanGame"].ConnectionString);
@@ -262,5 +256,7 @@ namespace Framework
         {
             return DateTime.Now.AddDays(1);
         }
+
+
     }
 }

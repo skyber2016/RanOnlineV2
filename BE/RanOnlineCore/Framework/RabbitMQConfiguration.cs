@@ -3,14 +3,12 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RanOnlineCore.Entity;
 using RanOnlineCore.Framework.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ZaloCSharpSDK;
 
 namespace RanOnlineCore.Framework
 {
@@ -81,21 +79,21 @@ namespace RanOnlineCore.Framework
             }
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-            var result = JsonConvert.DeserializeObject<ZaloReceiveMessage>(message);
-            if(result.event_name == ZaloEvent.UserSendText)
-            {
-                var messageText = result.message.text;
-                if (messageText.StartsWith("#tkb"))
-                {
-                    this.Context.ZaloClient.sendTextMessageToUserId(result.sender.id, TextRand[Rand.Next(0,TextRand.Count -1)]);
-                }
-                if (messageText.StartsWith("#add"))
-                {
-                    var textRep = messageText.Replace("#add", "");
-                    TextRand.Add(textRep);
-                    this.Context.ZaloClient.sendTextMessageToUserId(result.sender.id, "ok");
-                }
-            }
+            //var result = JsonConvert.DeserializeObject<ZaloReceiveMessage>(message);
+            //if(result.event_name == ZaloEvent.UserSendText)
+            //{
+            //    var messageText = result.message.text;
+            //    if (messageText.StartsWith("#tkb"))
+            //    {
+            //        this.Context.ZaloClient.sendTextMessageToUserId(result.sender.id, TextRand[Rand.Next(0,TextRand.Count -1)]);
+            //    }
+            //    if (messageText.StartsWith("#add"))
+            //    {
+            //        var textRep = messageText.Replace("#add", "");
+            //        TextRand.Add(textRep);
+            //        this.Context.ZaloClient.sendTextMessageToUserId(result.sender.id, "ok");
+            //    }
+            //}
             
             Channel.BasicAck(ea.DeliveryTag, false);
         }

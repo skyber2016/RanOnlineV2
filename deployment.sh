@@ -5,7 +5,7 @@
 # 4. Run script start server
 
 # Export static variable
-export ec2_host=ubuntu@18.191.162.236
+export ec2_host=ubuntu@3.17.161.159
 export ec2_ppk=./ran_online.ppk
 export rootDirectory=source
 # Echo start deployment

@@ -1,6 +1,7 @@
 ﻿using Dapper.FastCrud;
 using Framework;
 using RanOnlineCore.Entity;
+using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,7 @@ namespace RanOnlineCore.Action.NewsModel
     {
         private IEnumerable<Category> GetCategories(ObjectContext context)
         {
-            return context.RanMaster.Find<Category>(state => 
-                state.IsDeletedFalse()
-                );
+            return context.Factory.Query("wp_terms").Get<Category>();
         }
         protected override Result<IEnumerable<dynamic>> ExecuteCore(ObjectContext context)
         {
@@ -24,8 +23,8 @@ namespace RanOnlineCore.Action.NewsModel
             {
                 return new
                 {
-                    id = cate.Id,
-                    name = cate.Name
+                    id = cate.term_id,
+                    name = cate.name
                 };
             });
             return Success(data);
