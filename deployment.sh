@@ -11,7 +11,11 @@ export rootDirectory=source
 # Echo start deployment
 echo 'Start deployment for '$env' server - '$ec2_host
 rm -rf BE/RanOnlineCore/bin
+rm -rf BE/RanOnlineCore/published
+rm -rf BE/RanOnlineCore/obj
 rm -rf ./Deploy
+rm -rf ./Deploy.zip
+
 mkdir Deploy
 echo 'Buiding back end'
 cd BE/RanOnlineCore && dotnet publish -o ./published -r linux-x64 && cd ../..
@@ -20,7 +24,7 @@ cd Deploy && mkdir BE
 cd ..
 cp -r ./BE/RanOnlineCore/bin/Debug/netcoreapp2.1/linux-x64/ ./Deploy/BE
 echo 'Building front-end'
-cd FE && npm run build && cd ..
+cd FE && npm i && npm run build && cd ..
 cp -r ./FE/dist/FE/ ./Deploy
 echo 'zip file'
 7z a -tzip deploy.zip ./Deploy/*
