@@ -10,7 +10,7 @@ RanOnlineCore/published
 .vs
 # Rider
 .idea
-
+packages
 # User-specific files
 *.suo
 *.user
