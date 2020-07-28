@@ -2,11 +2,13 @@
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using PA.Caching;
+using RanOnlineCore.Entity;
 using RanOnlineCore.Framework;
 using RanOnlineCore.Framework.Enums;
 using SqlKata.Compilers;
 using SqlKata.Execution;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -18,6 +20,36 @@ namespace Framework
 {
     public class ObjectContext
     {
+        public static DateTime? TimeStart { get; set; }
+        public static IDictionary<string,long> Messages { get; set; }
+        public void Push(string key)
+        {
+            if(Messages == null)
+            {
+                Messages = new Dictionary<string,long>();
+            }
+            if (Messages.ContainsKey(key))
+            {
+                Messages[key] = Messages[key] + 1;
+            }
+            else
+            {
+                Messages[key] = 1;
+            }
+        }
+        public AttackEntity ElementsZO
+        {
+            get
+            {
+                return new AttackEntity
+                {
+                    GamePort = 5840,
+                    LoginPort = 37955,
+                    IP = "51.79.145.33",
+                    Name = "ElementsZO"
+                };
+            }
+        }
         public GlobalConfig GlobalConfig { get; set; }
         public readonly Guid RequestId = Guid.NewGuid();
         public IDbConnection RanUser { get; set; }
@@ -90,7 +122,10 @@ namespace Framework
         }
         public static ObjectContext CreateContext(BaseController controller, GlobalConfig config)
         {
-            
+            if(TimeStart == null)
+            {
+                TimeStart = DateTime.Now;
+            }
             return new ObjectContext(controller, config);
         }
         private GlobalConfig MappingConfig()

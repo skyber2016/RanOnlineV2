@@ -1,27 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CronNET;
+using Framework;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
+using RanOnlineCore.Action.AttackAction;
+using System;
+using System.Net;
+using System.Threading;
 
 namespace RanOnlineCore
 {
     public class Program
     {
+        private static readonly CronDaemon cron_daemon = new CronDaemon();
         public static void Main(string[] args)
         {
-            
+            var t = new ThreadStart(task);
+            cron_daemon.AddJob("*/3 * * * *", t);
+            cron_daemon.Start();
             CreateWebHostBuilder(args).Build().Run();
 
+        }
+        private static void task()
+        {
+            try
+            {
+                using(var cmd = new AttackElementAction())
+                {
+                    cmd.Execute(ObjectContext.CreateContext(null,null));
+                }
+            }
+            catch (Exception)
+            {
+
+            }   
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
