@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DDOSElementsZO")]
+[assembly: AssemblyTitle("Update")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DDOSElementsZO")]
+[assembly: AssemblyProduct("Update")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0a087726-cbaa-4b45-91e4-d4f526e2dfc9")]
+[assembly: Guid("cbd64e51-5fe6-4ce0-bf79-b2fd3fafa90b")]
 
 // Version information for an assembly consists of the following four values:
 //

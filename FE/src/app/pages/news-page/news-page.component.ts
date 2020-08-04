@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NewsService } from "src/app/services/news.service";
 import { SpinnerService } from "src/app/services/spinner.service";
+import { GlobalSettingService } from 'src/app/services/global-setting.service';
 
 @Component({
   selector: "app-news-page",
@@ -14,7 +15,7 @@ export class NewsPageComponent implements OnInit {
   currentCategory = -1;
   constructor(
     private newsService: NewsService,
-    private spinner: SpinnerService
+    private spinner: SpinnerService,
   ) {}
 
   ngOnInit(): void {

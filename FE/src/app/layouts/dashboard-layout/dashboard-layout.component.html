@@ -1,42 +1,46 @@
-<div id="loader" style="display: none;">
-    <div style="position: fixed;width: 100%;height: 100%;background: black;z-index: 100;opacity: 0.7;"></div>
-    <div style="position: fixed;width: 100%;height: 100%;top: 50%;left: 50%;margin: -50px 0px 0px -50px;z-index:101">
-        <div class="lds-ripple">
-            <div></div>
-            <div></div>
+<div style="width: 100%;height: 100%;" *ngIf="this.settings.background">
+    <div id="loader" style="display: none;">
+        <div style="position: fixed;width: 100%;height: 100%;background: black;z-index: 100;opacity: 0.7;"></div>
+        <div style="position: fixed;width: 100%;height: 100%;top: 50%;left: 50%;margin: -50px 0px 0px -50px;z-index:101">
+            <div class="lds-ripple">
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
-</div>
-<div class="wrap-bg dashboard-container">
-    <div id="header">
-        <div class="container">
-            <app-menu-for-layout></app-menu-for-layout>
-            <!-- nav close -->
+    <div class="wrap-bg dashboard-container" [ngStyle]="{'background': 'url(' + this.settings.background + ') no-repeat top center'}">
+        <div id="header">
+            <div class="container">
+                <app-menu-for-layout></app-menu-for-layout>
+                <!-- nav close -->
+            </div>
+            <div class="user-info" *ngIf="fullName">
+                <span><strong>{{fullName}}</strong>, <a (click)="logout()">Đăng xuất</a></span>
+            </div>
         </div>
-        <div class="user-info" *ngIf="fullName">
-            <span><strong>{{fullName}}</strong>, <a (click)="logout()">Đăng xuất</a></span>
+
+        <div class="content">
+            <app-banner-for-layout></app-banner-for-layout>
+            <!-- session 1 -->
+
+            <div id="sessions-2">
+                <router-outlet></router-outlet>
+                <!-- session-left -->
+
+                <app-session-right-for-layout></app-session-right-for-layout>
+            </div>
+            <!-- session 2 -->
         </div>
+        <!-- wapper close -->
     </div>
+    <div class="footer">
+        <div class="back-ground">
 
-    <div class="content">
-        <app-banner-for-layout></app-banner-for-layout>
-        <!-- session 1 -->
-
-        <div id="sessions-2">
-            <router-outlet></router-outlet>
-            <!-- session-left -->
-
-            <app-session-right-for-layout></app-session-right-for-layout>
         </div>
-        <!-- session 2 -->
-    </div>
-    <!-- wapper close -->
-</div>
-<div class="footer">
-    <!-- <div class="footer-main">
-        <div class="footer-link">
-            <ul>
-                <li><a href="//cuuam.gosu.vn/home/news/tin-tuc/quy-dinh-tham-gia-game-thuoc-cong-dong-cuu-am-chan-kinh.html" target="_blank">Điều khoản sử dụng</a></li>
+        <!-- <div class="footer-main">
+            <div class="footer-link">
+                <ul>
+                    <li><a href="//cuuam.gosu.vn/home/news/tin-tuc/quy-dinh-tham-gia-game-thuoc-cong-dong-cuu-am-chan-kinh.html" target="_blank">Điều khoản sử dụng</a></li>
                     <li>|</li>
                     <li><a href="https://id.gosu.vn/" target="_blank">Bảo mật tài khoản</a></li>
                     <li>|</li>
@@ -53,21 +57,22 @@
             </div>
             <div id="logo-cubinet"></div>
         </div> -->
-</div>
-<!-- footer close -->
+    </div>
+    <!-- footer close -->
 
-<!-- popup -->
-<!-- <div class="container-balon" id="container-balon">
-    <div class="container-close">
-        <div class="message">SỰ KIỆN THÁNG 6</div>
-        <a id="balon-delete" class="close-tip"> </a>
-        <a id="balon-hide" class="close-tip"> </a>
-        <a id="balon-show" class="close-tip"> </a>
-    </div>
-    <div class="container-img-balon">
-        <a href="https://cuuam.gosu.vn/home/su-kien/chuoi-su-kien-thang-6/giai-nhiet-mua-he.html" target="_blank">
-            <img src="http://cuuam.gosu.vn/home/static/uploads/news/2020/6/1/300x180.jpg" alt="Code" />
-        </a>
-    </div>
-</div> -->
-<!-- end popup -->
+    <!-- popup -->
+    <!-- <div class="container-balon" id="container-balon">
+        <div class="container-close">
+            <div class="message">SỰ KIỆN THÁNG 6</div>
+            <a id="balon-delete" class="close-tip"> </a>
+            <a id="balon-hide" class="close-tip"> </a>
+            <a id="balon-show" class="close-tip"> </a>
+        </div>
+        <div class="container-img-balon">
+            <a href="https://cuuam.gosu.vn/home/su-kien/chuoi-su-kien-thang-6/giai-nhiet-mua-he.html" target="_blank">
+                <img src="http://cuuam.gosu.vn/home/static/uploads/news/2020/6/1/300x180.jpg" alt="Code" />
+            </a>
+        </div>
+    </div> -->
+    <!-- end popup -->
+</div>
