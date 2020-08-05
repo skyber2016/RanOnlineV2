@@ -13,6 +13,7 @@ namespace Update
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("RUNNING....");
             var pathData = "DATA";
             if (!Directory.Exists(pathData))
             {
@@ -35,15 +36,19 @@ namespace Update
                         {
                             using(var stream = File.OpenRead(x.FullName))
                             {
-                                Console.WriteLine(x.Name);
+                                var pathFile = x.DirectoryName.Replace(dir.FullName, "").Replace("\\", "/");
+                                if (pathFile.StartsWith("/"))
+                                {
+                                    pathFile = pathFile.Remove(0, 1);
+                                }
                                 return new
                                 {
                                     Path = $"{pathUpdate}/{dir.Name}{x.FullName.Replace(dir.FullName, "").Replace("\\", "/")}",
                                     Name = x.Name,
                                     Size = x.Length,
-                                    Hash = md5.ComputeHash(stream),
+                                    Hash = x.IsReadOnly ? BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToUpperInvariant() : null,
                                     Location = x.FullName.Replace(dir.FullName + "\\", "").Replace("\\", "/"),
-                                    Folder = x.FullName.Replace(dir.FullName + "\\", "").Replace("\\", "/").Replace("/" +x.Name,"")
+                                    Folder = pathFile
                                 };
                             }
                             
@@ -63,6 +68,22 @@ namespace Update
             using(var w = new StreamWriter("update.json"))
             {
                 w.Write(JsonConvert.SerializeObject(result));
+            }
+            using(var w = new StreamWriter("Launcher.json"))
+            {
+                w.Write(Hash("Launcher.exe"));
+            }
+            Console.WriteLine("SUCCESS");
+        }
+        private static string Hash(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToUpperInvariant();
+                }
             }
         }
     }

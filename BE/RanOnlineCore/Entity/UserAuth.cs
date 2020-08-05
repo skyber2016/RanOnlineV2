@@ -10,7 +10,6 @@ namespace RanOnlineCore.Entity
     {
         public long UserId { get; set; }
         public string Username { get; set; }
-        public RoleEnum Role { get; set; }
         public DateTime Expired { get; set; }
     }
 }

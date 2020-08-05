@@ -13,13 +13,6 @@ namespace RanOnlineCore
 {
     public static class DapperExtensions
     {
-        public static bool Update(this IDbConnection db, Menu data)
-        {
-            data.UpdatedDate = DateTime.Now;
-            data.UpdatedBy = "system";
-            // TODO: Get authen
-            return db.Update<Menu>(data);
-        }
         public static IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<T> IsDeletedFalse<T>(this IRangedBatchSelectSqlSqlStatementOptionsOptionsBuilder<T> builder)
         {
             return builder.Where($"IsDeleted = @isDeleted").WithParameters(new { isDeleted = false});

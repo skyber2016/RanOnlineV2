@@ -24,7 +24,6 @@ namespace Framework
         {
             var controller = actionContext.Controller as BaseController;
             var context = controller.CurrentObjectContext;
-            var isUser = false;
             try
             {
                 var controllerActionDescriptor = actionContext.ActionDescriptor as ControllerActionDescriptor;
@@ -36,8 +35,6 @@ namespace Framework
                         base.OnActionExecuting(actionContext);
                         return;
                     }
-                    var userRole = controllerActionDescriptor.MethodInfo.GetCustomAttributes(inherit: true).FirstOrDefault(x => x.GetType() == typeof(UserRoleAttribute));
-                    isUser = userRole != null;
                 }
                 var header = actionContext.HttpContext.Request.Headers;
                 var auth = "Authorization";
@@ -56,16 +53,8 @@ namespace Framework
                 {
                     throw new NoAuthorizeException();
                 }
-                if (isUser)
-                {
-                    base.OnActionExecuting(actionContext);
-                    return;
-                }
-                if(user.Role != RoleEnum.ADMIN)
-                {
-                    throw new UnauthorizedAccessException();
-                }
-
+                context.User = user;
+                base.OnActionExecuting(actionContext);
             }
             catch (UnauthorizedAccessException)
             {

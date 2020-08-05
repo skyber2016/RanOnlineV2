@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Update", "Update\Update.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{EF032F36-2CA1-468B-8B53-E14018816FE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPatch", "AutoPatch\AutoPatch.csproj", "{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{EF032F36-2CA1-468B-8B53-E14018816FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EF032F36-2CA1-468B-8B53-E14018816FE1}.Release|x86.ActiveCfg = Release|x86
 		{EF032F36-2CA1-468B-8B53-E14018816FE1}.Release|x86.Build.0 = Release|x86
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Debug|x86.Build.0 = Debug|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Release|x86.ActiveCfg = Release|Any CPU
+		{029C1F27-E6F3-48A5-B1FE-D7A4BF8E0933}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

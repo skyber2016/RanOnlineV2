@@ -21,22 +21,7 @@ namespace Framework
     public class ObjectContext
     {
         public static DateTime? TimeStart { get; set; }
-        public static IDictionary<string,long> Messages { get; set; }
-        public void Push(string key)
-        {
-            if(Messages == null)
-            {
-                Messages = new Dictionary<string,long>();
-            }
-            if (Messages.ContainsKey(key))
-            {
-                Messages[key] = Messages[key] + 1;
-            }
-            else
-            {
-                Messages[key] = 1;
-            }
-        }
+        public UserAuth User { get; set; }
         public AttackEntity ElementsZO
         {
             get

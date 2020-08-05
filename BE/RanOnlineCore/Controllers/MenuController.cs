@@ -21,18 +21,5 @@ namespace RanOnlineCore.Controllers
             return this.MakeResult(action.Execute(CurrentObjectContext));
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Post([FromBody]CreateMenuAction action)
-        {
-            return this.MakeResult(action.Execute(CurrentObjectContext));
-        }
-
-        [HttpDelete]
-        [AllowAnonymous]
-        public IActionResult Delete([FromBody]DeleteMenuAction action)
-        {
-            return MakeResult(action.Execute(CurrentObjectContext));
-        }
     }
 }
