@@ -23,9 +23,10 @@ namespace Update
                 .GetDirectories(pathData)
                 .Select(x => new DirectoryInfo(x))
                 ;
-            var totalSize = 0L;
+            var pathUpdate = "/update/DATA";
             foreach (var dir in directories)
             {
+                var totalSize = 0L;
                 var files = Directory.GetFiles(dir.FullName, "*.*", SearchOption.AllDirectories)
                     .Select(x => new FileInfo(x))
                     .Select(x=>
@@ -35,13 +36,14 @@ namespace Update
                             using(var stream = File.OpenRead(x.FullName))
                             {
                                 Console.WriteLine(x.Name);
-                                totalSize += x.Length;
                                 return new
                                 {
-                                    Path = x.FullName.Replace(dir.FullName, "").Replace("\\", "/"),
+                                    Path = $"{pathUpdate}/{dir.Name}{x.FullName.Replace(dir.FullName, "").Replace("\\", "/")}",
                                     Name = x.Name,
                                     Size = x.Length,
-                                    Hash = md5.ComputeHash(stream)
+                                    Hash = md5.ComputeHash(stream),
+                                    Location = x.FullName.Replace(dir.FullName + "\\", "").Replace("\\", "/"),
+                                    Folder = x.FullName.Replace(dir.FullName + "\\", "").Replace("\\", "/").Replace("/" +x.Name,"")
                                 };
                             }
                             
@@ -49,9 +51,15 @@ namespace Update
                         
                     })
                     ;
-                result[dir.Name] = files;
+                foreach (var item in files)
+                {
+                    totalSize += item.Size;
+                }
+                result[dir.Name] = new {
+                    TotalSize = totalSize,
+                    Files = files
+                };
             }
-            result["TotalSize"] = totalSize;
             using(var w = new StreamWriter("update.json"))
             {
                 w.Write(JsonConvert.SerializeObject(result));
