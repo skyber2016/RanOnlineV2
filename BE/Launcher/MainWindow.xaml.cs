@@ -62,8 +62,16 @@ namespace Launcher
                 this.txtCurrent.Content = "100%";
                 this.txtTotal.Content = "100%";
             });
-            this.speed.Content = "Cập nhật thành công.";
-            this.UpdateProgresText($"Đã cập nhật hoàn tất, bạn đã có thể vào game!");
+            if (this.IsSuccess) {
+                this.speed.Content = "Cập nhật thành công.";
+                this.UpdateProgresText($"Đã cập nhật hoàn tất, bạn đã có thể vào game!");
+            }
+            else
+            {
+                this.speed.Content = "Cập nhật thất bại.";
+                this.UpdateProgresText($"Bản cập nhật này đã xảy ra lỗi, vui lòng thông báo đến Admin để nhận sự trợ giúp. Xin cảm ơn!");
+            }
+            
         }
         private IDictionary<string, FileEntity> GetUpdate()
         {
@@ -381,7 +389,7 @@ namespace Launcher
                                 var per = (double)this.CurrentFile / this.TotalFile * 100;
                                 this.txtTotal.Content = (int)per + "%";
                                 this.speed.Content = $"{this.CurrentFile} / {this.TotalFile}";
-                                this.gTotal.Value = per;
+                                this.gTotal.Value = this.CurrentFile;
                                 ++this.CurrentFile;
                             });
                         }
