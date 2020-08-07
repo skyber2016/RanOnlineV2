@@ -13,6 +13,7 @@ namespace Launcher
             this.Files = new List<FileInfomaion>();
         }
         public long TotalSize { get; set; }
+        public long TotalFile { get; set; }
         public List<FileInfomaion> Files { get; set; }
     }
 

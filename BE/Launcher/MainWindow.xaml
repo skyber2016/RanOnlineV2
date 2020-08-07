@@ -17,18 +17,20 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <RichTextBox Name="rtbData" Height="269" Margin="194,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="434">
+        <RichTextBox Name="rtbData" Height="258" Margin="194,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="434">
             <FlowDocument>
                 <Paragraph>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
         <Image Name="mainImage" HorizontalAlignment="Left" Height="329" Margin="10,4,0,0" VerticalAlignment="Top" Width="168" Stretch="Fill" Source="tyranny mini event.jpg"/>
-        <ProgressBar IsIndeterminate="True"  Name="gTotal" HorizontalAlignment="Left" Value="0" Height="19" Margin="194,309,0,0" VerticalAlignment="Top" Width="318"/>
-        <Image MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave" HorizontalAlignment="Left" Height="43" Margin="521,290,0,0" VerticalAlignment="Top" Width="107" Source="start.gif"/>
-        <Label Name="txtTotal" HorizontalContentAlignment="Center" Content="0%" HorizontalAlignment="Left" Margin="198,305,0,0" VerticalAlignment="Top" Width="318" Height="24"/>
+        <ProgressBar IsIndeterminate="True"  Name="gCurrent" HorizontalAlignment="Left" Value="0" Height="19" Margin="194,309,0,0" VerticalAlignment="Top" Width="318"/>
+        <Image MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave" HorizontalAlignment="Left" Height="49" Margin="521,284,0,0" VerticalAlignment="Top" Width="107" Source="start.gif"/>
+        <Label Name="txtCurrent" HorizontalContentAlignment="Center" Content="0%" HorizontalAlignment="Left" Margin="198,305,0,0" VerticalAlignment="Top" Width="318" Height="24"/>
         <Rectangle MouseUp="Overlay_MouseUp" MouseEnter="Overlay_MouseEnter" MouseLeave="Overlay_MouseLeave" Name="overlay" Visibility="Hidden" Fill="#33FFFFFF" HorizontalAlignment="Left" Height="43" Margin="521,290,0,0" VerticalAlignment="Top" Width="107"/>
-        <Label Name="speed" HorizontalContentAlignment="Right" FontWeight="Bold" Content="0 kb/s" HorizontalAlignment="Left" Margin="194,279,0,0" VerticalAlignment="Top" Width="318"/>
+        <Label Name="speed" HorizontalContentAlignment="Right" FontWeight="Bold" Content="0 kb/s" HorizontalAlignment="Left" Margin="194,260,0,0" VerticalAlignment="Top" Width="318"/>
+        <ProgressBar IsIndeterminate="True"  x:Name="gTotal" HorizontalAlignment="Left" Value="0" Height="19" Margin="194,284,0,0" VerticalAlignment="Top" Width="318"/>
+        <Label x:Name="txtTotal" HorizontalContentAlignment="Center" Content="0%" HorizontalAlignment="Left" Margin="198,280,0,0" VerticalAlignment="Top" Width="318" Height="24"/>
 
     </Grid>
 </Window>
