@@ -125,6 +125,7 @@ namespace Framework
                 ZaloAccessToken = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.ZaloAccessToken))?.Value,
                 RanMaster = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RanMaster))?.Value,
                 RanUser = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RanUser))?.Value,
+                RanGame = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RanGame))?.Value,
                 RabbitHost = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitHost))?.Value,
                 RabbitPassword = localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitPassword))?.Value,
                 RabbitPort = int.Parse(localConfig.FirstOrDefault(x => x.Key == nameof(GlobalConfig.RabbitPort))?.Value),
@@ -146,7 +147,7 @@ namespace Framework
             }
             _controller = controller;
             this.RanUser = new SqlConnection(this.GlobalConfig.RanUser);
-            //this.RanGame = new SqlConnection(ConfigurationManager.ConnectionStrings["connectRanGame"].ConnectionString);
+            this.RanGame = new SqlConnection(this.GlobalConfig.RanGame);
             this.RanMaster = new MySqlConnection(this.GlobalConfig.RanMaster);
             var compiler = new MySqlCompiler();
             this.Factory = new QueryFactory(this.RanMaster, compiler);

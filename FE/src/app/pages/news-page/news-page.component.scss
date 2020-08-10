@@ -1,7 +1,21 @@
-.tbnews {
-    line-height: 65px;
-}
-
-a {
-    cursor: pointer;
+.session-left {
+    .tbnews {
+        line-height: 65px;
+    }
+    .tab-news {
+        h2 {
+            margin: 0;
+        }
+    }
+    a {
+        cursor: pointer;
+    }
+    .news-link {
+        background-color: #233553;
+    }
+    .page {
+        a {
+            color: white;
+        }
+    }
 }

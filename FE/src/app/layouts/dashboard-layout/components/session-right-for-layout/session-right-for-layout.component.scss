@@ -1,0 +1,43 @@
+.session-right {
+    .title {
+        text-align: center;
+        font-weight: bold;
+        color: #c7a87a;
+        border-bottom: 1px solid whitesmoke;
+    }
+    .ranking {
+        li {
+            border-bottom: 1px solid whitesmoke;
+        }
+        .info {
+            width: 71%;
+            height: 51px;
+            float: left;
+            margin: 0 0 0 2px;
+            padding-bottom: 15px;
+            a {
+                color: white;
+                font-weight: bold;
+            }
+            span {
+                color: whitesmoke;
+            }
+        }
+        .img {
+            overflow: hidden;
+            width: 52px;
+            height: 52px;
+            float: left;
+            background: #1f1f1f;
+            border-width: 1px;
+            border-style: solid;
+            box-shadow: 0px 0px 3px rgba(51, 51, 51, 1);
+            margin: 5px 0px 0px 7px;
+        }
+        .clear {
+            clear: both;
+            height: 0;
+            width: 0;
+        }
+    }
+}

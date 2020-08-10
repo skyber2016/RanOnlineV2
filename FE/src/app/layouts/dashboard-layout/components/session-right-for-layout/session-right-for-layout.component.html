@@ -1,82 +1,32 @@
 <div class="session-right">
     <div class="box-option">
-        <div class="option-1">
-            <a href="http://cuuam.gosu.vn/cuu-am-bao-dien.html" target="_blank"></a>
-        </div>
-        <div class="option-2">
-            <a href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/mon-phai-the-luc" target="_blank"></a>
-        </div>
-        <div class="option-3">
-            <a href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/tan-thu.html" target="_blank"></a>
-        </div>
-        <div class="option-4">
-            <a href="http://cuuam.gosu.vn/vo-hoc" target="_blank"></a>
-        </div>
-        <div class="option-5">
-            <a href="//cuuam.gosu.vn/phong-vat-chi" target="_blank"></a>
-        </div>
+        <h1 class="title">BẢNG XẾP HẠNG</h1>
+        <ul class="ranking">
+            <li *ngFor="let player of ranking">
+                <div class="img">
+                    <img src="http://undefeatedran.com/templates/orion/images/class/GM.jpg" title="{{player.name}}"><span class="overlay-link"></span>
+                </div>
+                <div class="info">({{player.rank}}) <a>{{player.name}}</a><br>
+                    <!-- <small>P H X</small> -->
+                    <br>
+                    <small>Level: <span>{{player.level}}</span> - Giết: <span>{{player.kill}}</span> - Chết:
+                        <span>{{player.death}}</span></small><br>
+                </div>
+                <div class="clear"></div>
+            </li>
+        </ul>
     </div>
-    <!-- END Bảo Điển, Tân thủ -->
 
-    <div class="box-special">
-        <div class="title-link"><span class="icon-title"></span>Đặc sắc</div>
+    <!-- END môn phái -->
+    <div class="box-fanpage">
+        <div class="title-link"><span class="icon-title"></span>Fanpage</div>
+        <ul class="fanpage-content">
+            <div class="fb-like-box" data-href="https://www.facebook.com/cuuam.gosu.vn" data-width="240" data-colorscheme="dark" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false">
+            </div>
+        </ul>
+    </div>
+    <!-- END fanpage -->
 
-        <ul class="special-content">
-            <li>
-                <a href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/dac-sac/do-hoa">Đồ họa</a
-        >
-      </li>
-      <li>
-        <a
-          href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/dac-sac/khong-cap-do"
-          >Không cấp độ</a
-        >
-      </li>
-      <li><a href="http://cuuam.gosu.vn/vo-hoc">Võ học</a></li>
-            <li>
-                <a href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/dac-sac/khinh-cong-150262666">Khinh công</a
-        >
-      </li>
-      <li>
-        <a
-          href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/dac-sac/nghe-nghiep"
-          >Nghề nghiệp</a
-        >
-      </li>
-      <li>
-        <a
-          href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/dac-sac/ky-ngo"
-          >Kỳ ngộ</a
-        >
-      </li>
-      <li>
-        <a
-          href="http://cuuam.gosu.vn/home/cuu-am-bao-dien/gioi-thieu/dac-sac/offline"
-          >Không Offline</a
-        >
-      </li>
-    </ul>
-  </div>
-  <!-- END đặc sắc -->
-
-  <!-- END môn phái -->
-  <div class="box-fanpage">
-    <div class="title-link"><span class="icon-title"></span>Fanpage</div>
-    <ul class="fanpage-content">
-      <div
-        class="fb-like-box"
-        data-href="https://www.facebook.com/cuuam.gosu.vn"
-        data-width="240"
-        data-colorscheme="dark"
-        data-show-faces="true"
-        data-header="false"
-        data-stream="false"
-        data-show-border="false"
-      ></div>
-    </ul>
-  </div>
-  <!-- END fanpage -->
-
-  <!-- End block banner_banner-event -->
+    <!-- End block banner_banner-event -->
 </div>
 <!-- session-right -->

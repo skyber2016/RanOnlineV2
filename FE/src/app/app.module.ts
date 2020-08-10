@@ -17,6 +17,7 @@ import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-pa
 import { CKEditorModule } from "ckeditor4-angular";
 import { NewsEditorPageComponent } from "./pages/news-editor-page/news-editor-page.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { LoginPageComponent } from "./pages/login-page/login-page.component";
     NewsDetailPageComponent,
     NewsEditorPageComponent,
     LoginPageComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,

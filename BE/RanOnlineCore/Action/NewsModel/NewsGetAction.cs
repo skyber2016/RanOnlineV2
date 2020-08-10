@@ -28,6 +28,7 @@ namespace RanOnlineCore.Action.NewsModel
             builder.Append("left join wp_postmeta meta on meta.post_id = wp_posts.ID and meta.meta_key = '_thumbnail_id' ");
             builder.Append("left join wp_posts attachment on attachment.ID = meta.meta_value and attachment.post_type = 'attachment' ");
             builder.Append($"where wp_posts.post_type = 'post' and wp_posts.post_status = 'publish' and wp_posts.ID IN({strCategories}) ");
+            builder.Append($"order by wp_posts.post_date desc ");
             builder.Append($"LIMIT {(this.CurrentPage - 1) * this.PageSize},{this.PageSize} ");
             var data = context.RanMaster.Query<DTOGetPosts>(builder.ToString());
             return data;

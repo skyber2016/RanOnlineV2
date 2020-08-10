@@ -6,10 +6,11 @@ import { NewsPageComponent } from "./pages/news-page/news-page.component";
 import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-page.component";
 import { NewsEditorPageComponent } from "./pages/news-editor-page/news-editor-page.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 
 const routes: Routes = [
   {
-    path: "",
+    path: "home",
     component: DashboardLayoutComponent,
     children: [
       {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: "login",
     component: LoginPageComponent,
+  },
+  {
+    path: "",
+    component: LandingPageComponent,
   },
 ];
 

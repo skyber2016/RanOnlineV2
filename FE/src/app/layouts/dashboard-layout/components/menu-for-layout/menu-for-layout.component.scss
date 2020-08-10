@@ -3,3 +3,17 @@
     padding-top: 20px;
     color: white;
 }
+
+.nav {
+    background: #000000c9;
+    min-height: 4rem;
+    position: fixed;
+    z-index: 999;
+    .logo {
+        a {
+            background-image: url(../../../../../assets/images/logo.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    }
+}

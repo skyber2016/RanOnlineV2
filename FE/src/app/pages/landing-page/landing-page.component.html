@@ -1,0 +1,36 @@
+<div class="landing-page-container">
+    <div class="page">
+        <div class="wrapper_page">
+            <a [routerLink]="[ '/home']">
+                <video id="my-video" preload="auto" autoplay loop muted="">
+                    <source src="../../../assets/videos/RongDen_Flash.webm" type="video/webm">
+                </video>
+            </a>
+            <header id="header">
+                <div class="wrapper_main">
+
+                    <a [routerLink]="[ '/home']" class="server_new">
+                        <span></span>
+                    </a>
+                    <div class="logo">
+                        <a [routerLink]="[ '/home']"></a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </header>
+            <section id="main">
+                <div class="wrapper_main">
+                    <a [routerLink]="[ '/home']">
+                        <div class="slogan"></div>
+                    </a>
+
+                </div>
+            </section>
+            <audio id="player" controls="true" autoplay="true" loop="loop">
+                <source src="../../../assets/videos/Intro Music.mp3" type="audio/mpeg">
+            </audio>
+            <span id="showmp3" class="btn_music"></span>
+            <span id="mutemp3" class="btn_music"></span>
+        </div>
+    </div>
+</div>

@@ -157,8 +157,9 @@ a:hover {
 
 .nav:hover,
 .nav.nav-on {
-    height: 432px;
-    background: url(../images/navhover_bg.jpg) no-repeat;
+    height: 14rem;
+    /* background: url(../images/logo.jpg) no-repeat;
+    background-size: cover; */
     -webkit-transition: height 0.5s ease-in-out;
     -moz-transition: height 0.5s ease-in-out;
     -ms-transition: height 0.5s ease-in-out;
@@ -172,11 +173,12 @@ a:hover {
 }
 
 .nav-list li {
+    border-bottom: 1px solid whitesmoke;
     float: left;
     text-align: center;
     width: 105px;
     height: 42px;
-    border-right: 1px solid #6f7179;
+    /* border-right: 1px solid #6f7179; */
     font-family: "UVNThanhPho_R";
 }
 
@@ -229,7 +231,7 @@ a:hover {
     height: 160px;
     width: 105px;
     padding-top: 5px;
-    border-right: 1px solid #e5e5e4;
+    /* border-right: 1px solid #e5e5e4; */
     text-align: center;
 }
 
@@ -256,7 +258,7 @@ a:hover {
     padding: 2px 5px;
     height: 19px;
     line-height: 19px;
-    color: #0d1528;
+    color: white;
     font-family: "uvnthanhpho_r";
     font-size: 15px;
 }
@@ -418,7 +420,7 @@ a:hover {
 /*- slider-link -*/
 
 .slider-link {
-    width: 491px;
+    width: 45.8rem;
     height: 254px;
     position: absolute;
     top: 3px;
@@ -785,7 +787,7 @@ a:hover {
 .box-option {
     background: #112141;
     width: 239px;
-    height: 310px;
+    /* height: 310px; */
     margin: 0px auto;
     padding: 0px;
 }

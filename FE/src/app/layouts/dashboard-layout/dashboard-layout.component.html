@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-    <div class="wrap-bg dashboard-container" [ngStyle]="{'background': 'url(' + this.settings.background + ') no-repeat top center'}">
+    <div class="wrap-bg dashboard-container" [ngStyle]="{'background': 'url(' + this.settings.background + ') no-repeat center center fixed'}">
         <div id="header">
             <div class="container">
                 <app-menu-for-layout></app-menu-for-layout>
@@ -33,11 +33,11 @@
         </div>
         <!-- wapper close -->
     </div>
-    <div class="footer">
+    <!-- <div class="footer">
         <div class="back-ground">
 
         </div>
-        <!-- <div class="footer-main">
+        <div class="footer-main">
             <div class="footer-link">
                 <ul>
                     <li><a href="//cuuam.gosu.vn/home/news/tin-tuc/quy-dinh-tham-gia-game-thuoc-cong-dong-cuu-am-chan-kinh.html" target="_blank">Điều khoản sử dụng</a></li>
@@ -56,8 +56,8 @@
                 <p>Giấy phép số 2474/QĐ-BTTTT do Bộ Thông tin và Truyền thông cấp ngày 29/12/2015</p>
             </div>
             <div id="logo-cubinet"></div>
-        </div> -->
-    </div>
+        </div>
+    </div> -->
     <!-- footer close -->
 
     <!-- popup -->
@@ -75,4 +75,10 @@
         </div>
     </div> -->
     <!-- end popup -->
+
+    <div style="position:fixed; right:-13px; top:150px; z-index:9999;">
+        <a href="#" target="_blank">
+            <img style="max-width:15rem;" src="../../../assets/images/render.png">
+        </a>
+    </div>
 </div>

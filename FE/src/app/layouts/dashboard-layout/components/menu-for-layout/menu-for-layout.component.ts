@@ -33,7 +33,7 @@ export class MenuForLayoutComponent implements OnInit {
       for (let index = 0; index < cate.length / 2; index++) {
         this.menuLeft.push(cate[index]);
       }
-      for (let index = cate.length / 2 + 1; index < cate.length; index++) {
+      for (let index = cate.length / 2; index < cate.length; index++) {
         this.menuRight.push(cate[index]);
       }
       for (let index = this.menuLeft.length; index < 4; index++) {
