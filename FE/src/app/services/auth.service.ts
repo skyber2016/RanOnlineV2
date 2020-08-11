@@ -10,4 +10,7 @@ export class AuthService {
   login(param): Promise<any> {
     return http.post(environment.host + "/auth/login", param);
   }
+  isLogin() {
+    return window.localStorage.getItem("username") != null;
+  }
 }

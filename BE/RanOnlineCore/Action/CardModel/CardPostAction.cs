@@ -16,15 +16,29 @@ namespace RanOnlineCore.Action.CardModel
         public string telco { get; set; }
         public string code { get; set; }
         public string serial { get; set; }
-        public string amount { get; set; }
+        public long amount { get; set; }
         private string partner_id { get; set; }
         private string sign { get; set; }
         private string command { get; set; }
         private string Url = "https://naptudong.com/chargingws/v2";
         private HttpClient Client { get; set; }
         private string UID { get; set; }
+        private IDictionary<string,string> dicTelco { get; set; }
         protected override void ValidateCore(ObjectContext context)
         {
+            this.dicTelco = new Dictionary<string, string>
+            {
+                ["VIETTEL"] = "VIETTEL",
+                ["VINAPHONE"] = "VINAPHONE",
+                ["MOBIFONE"] = "MOBIFONE",
+                ["VTC"] = "VTC",
+                ["GATE"] = "GATE",
+                ["ZING"] = "ZING",
+            };
+            if (!this.dicTelco.ContainsKey(this.telco.ToUpper()))
+            {
+                throw new BadRequestException("Nhà mạng không chính xác!");
+            }
             this.Client = new HttpClient();
             this.UID = this.GenUID();
             this.partner_id = "6229117851";
@@ -33,8 +47,14 @@ namespace RanOnlineCore.Action.CardModel
         protected override void OnExecutingCore(ObjectContext context)
         {
             var partner_key = "35ca55c425987ccdfcb96289d2ec662b";
-            var hash = partner_key + code + command + partner_id + this.UID + serial + telco.ToUpper();
-            this.sign = context.MD5Encode(hash);
+            var hash = partner_key.ToLower() 
+                + code.ToLower() 
+                + command.ToLower()
+                + partner_id.ToLower()
+                + this.UID.ToLower()
+                + serial.ToLower()
+                + telco.ToUpper();
+            this.sign = context.MD5Encode(hash).ToLower();
             context.RanUser.Insert(new Card
             {
                 Id = this.UID,
@@ -55,7 +75,7 @@ namespace RanOnlineCore.Action.CardModel
                 ["telco"] = telco,
                 ["code"] = code,
                 ["serial"] = serial,
-                ["amount"] = amount,
+                ["amount"] = amount.ToString(),
                 ["partner_id"] = partner_id,
                 ["sign"] = sign,
                 ["command"] = command,
@@ -90,15 +110,20 @@ namespace RanOnlineCore.Action.CardModel
         }
         private string GenUID()
         {
-            var abc = "abcdefghiklmnopqrstuvxyj0123456789";
-            var times = TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds;
-            var hash = "";
-            while (times > 0)
+            string result = string.Empty;
+            var baseChars = "abcdefghiklmnopqrstuvxyj0123456789";
+            var value = (long)TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds;
+
+            int targetBase = baseChars.Length;
+
+            do
             {
-                var index = (int)(times % 2);
-                hash = abc[index] + hash;
+                result = baseChars[(int)(value % targetBase)] + result;
+                value = value / targetBase;
             }
-            return hash;
+            while (value > 0);
+
+            return result;
         }
     }
 }

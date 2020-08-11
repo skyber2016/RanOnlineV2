@@ -17,7 +17,8 @@ import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-pa
 import { CKEditorModule } from "ckeditor4-angular";
 import { NewsEditorPageComponent } from "./pages/news-editor-page/news-editor-page.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { CardPageComponent } from "./pages/card-page/card-page.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
     NewsEditorPageComponent,
     LoginPageComponent,
     LandingPageComponent,
+    CardPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,10 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [PopupAddSubMenuComponent, LoginPageComponent],
+  entryComponents: [
+    PopupAddSubMenuComponent,
+    LoginPageComponent,
+    CardPageComponent,
+  ],
 })
 export class AppModule {}

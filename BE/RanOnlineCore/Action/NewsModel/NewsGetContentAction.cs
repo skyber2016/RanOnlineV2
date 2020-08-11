@@ -63,7 +63,7 @@ namespace RanOnlineCore.Action.NewsModel
                         title = x.post_title,
                         created_date = x.post_date.ToString("dd-MM-yyyy HH:mm"),
                         category_name = x.category_name,
-                        url = $"/news/{x.object_id}/{x.post_name}"
+                        url = $"home/news/{x.object_id}/{x.post_name}"
                     };
                 })
             });

@@ -704,10 +704,14 @@
     .wrapper_page {
         position: relative;
         overflow: hidden;
+        height: 100vh;
     }
     .wrapper_page .wrapper_main {
-        width: 987px;
+        width: 100vw;
         margin: 0px auto;
+        a {
+            padding-left: 20%;
+        }
     }
     #my-video {
         position: absolute;
@@ -755,7 +759,6 @@
         background-size: contain;
         position: absolute;
         top: 5px;
-        left: 150px;
         -webkit-animation: zoomTxt 1.5s linear;
         animation: zoomTxt 1.5s linear;
     }

@@ -107,7 +107,7 @@
 }
 
 .container-event-description ul li a {
-    color: #E8DCBB;
+    color: #e8dcbb;
 }
 
 .close-vk .container-event-description ul li a {
@@ -116,7 +116,7 @@
 
 .container-event-description ul li a:hover,
 .container-event-description ul li:hover {
-    color: #E3980D;
+    color: #e3980d;
 }
 
 .event-date {
@@ -138,7 +138,7 @@
     border: 3px solid #bfbfbf;
     padding: 5px 8px;
     text-transform: uppercase;
-    font-family: 'UVNThanhPho_R';
+    font-family: "UVNThanhPho_R";
     font-size: 16px;
     float: left;
     margin-left: 2px;
@@ -150,7 +150,7 @@
     border: 3px solid #112141;
     padding: 5px 8px;
     text-transform: uppercase;
-    font-family: 'UVNThanhPho_R';
+    font-family: "UVNThanhPho_R";
     font-size: 16px;
     float: left;
     margin-left: 2px;
@@ -162,7 +162,7 @@
     border: 3px solid #bfbfbf;
     padding: 10px;
     text-transform: uppercase;
-    font-family: 'UVNThanhPho_R';
+    font-family: "UVNThanhPho_R";
     font-size: 14px;
     float: left;
 }
@@ -172,21 +172,21 @@
     border: 3px solid #bfbfbf;
     padding: 10px;
     text-transform: uppercase;
-    font-family: 'UVNThanhPho_R';
+    font-family: "UVNThanhPho_R";
     font-size: 14px;
     float: left;
     margin-left: 10px;
 }
 
 .title-event {
-    font-family: 'UVNThanhPho_R';
+    font-family: "UVNThanhPho_R";
     font-size: 25px;
     color: #fab514;
     margin-top: 60px;
 }
 
 .title-event a {
-    font-family: 'UVNThanhPho_R';
+    font-family: "UVNThanhPho_R";
     font-size: 25px;
     color: #cd8f0c;
     text-transform: uppercase;
@@ -198,7 +198,7 @@
 }
 
 .date-event {
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 14px;
 }
 
@@ -212,7 +212,7 @@
 
 .detail-event a:hover {
     background: #bf830a;
-    color: #CCCCCC;
+    color: #cccccc;
 }
 
 .search {
@@ -223,7 +223,7 @@
 }
 
 input.txt_s {
-    background: #FFF;
+    background: #fff;
     border: 1px solid #d2d2d2;
     box-shadow: 0 0 0 0 #cccccc;
     color: #555;
@@ -282,7 +282,7 @@ input.btn_s {
     text-align: center;
     background: #071f45;
     margin-right: 10px;
-    color: #FFF;
+    color: #fff;
 }
 
 .date-news {
@@ -355,15 +355,15 @@ input.btn_s {
 }
 
 .content-news {
-    width: 95%;
+    background-color: whitesmoke;
+    width: 94.7%;
     margin: 0px auto;
-    padding-top: 20px;
-    padding-bottom: 50px;
+    padding: 20px 20px 0 20px;
     color: #1e1212;
     font-size: 13px;
     font-family: Tahoma, Geneva, sans-serif;
 }
 
 .content-news img {
-    max-width: 90%;
+    max-width: 100%;
 }

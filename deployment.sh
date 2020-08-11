@@ -31,21 +31,3 @@ echo 'zip file'
 echo 'set permission writeable'
 plink -i $ec2_ppk $ec2_host "mkdir ./avenger_new && sudo chmod 777 ./avenger_new"
 echo 'Copy source code to server'
-pscp -i $ec2_ppk -r ./deploy.zip $ec2_host:/home/ubuntu/avenger_new
-# Backup source current
-echo 'Backup source current'
-plink -i $ec2_ppk $ec2_host "sudo rm -rf ./backup_avenger"
-plink -i $ec2_ppk $ec2_host "sudo mv ./avenger ./backup_avenger"
-# rename source folder
-echo 'rename source folder'
-plink -i $ec2_ppk $ec2_host "sudo mv ./avenger_new ./avenger"
-echo 'unzip'
-plink -i $ec2_ppk $ec2_host "cd avenger && unzip deploy.zip"
-echo "Starting server"
-plink -i $ec2_ppk $ec2_host 'pm2 del api';
-plink -i $ec2_ppk $ec2_host 'cd ./avenger/BE/linux-x64 && pm2 start "dotnet RanOnlineCore.dll" --name "api"';
-plink -i $ec2_ppk $ec2_host 'pm2 del http-server';
-plink -i $ec2_ppk $ec2_host 'cd ./avenger/FE && sudo pm2 start http-server -p 8080';
-plink -i $ec2_ppk $ec2_host 'pm2 save';
-echo 'Press [Enter] key to continue...'
-read

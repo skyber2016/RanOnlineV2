@@ -1,0 +1,36 @@
+.telco:focus {
+    outline: none;
+}
+
+.card-container {
+    h2 {
+        text-align: center;
+    }
+    select {
+        width: 100%;
+        height: 2rem;
+        margin-bottom: 1rem;
+    }
+    input {
+        height: 2rem;
+        width: 97%;
+        margin-bottom: 1rem;
+    }
+    button {
+        width: 100%;
+        height: 2rem;
+        background-color: red;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .message {
+        margin-bottom: 1rem;
+    }
+}
+
+.card-form {
+    width: 17rem;
+}

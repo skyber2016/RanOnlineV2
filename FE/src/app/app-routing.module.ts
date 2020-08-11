@@ -7,8 +7,13 @@ import { NewsDetailPageComponent } from "./pages/news-detail-page/news-detail-pa
 import { NewsEditorPageComponent } from "./pages/news-editor-page/news-editor-page.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 
 const routes: Routes = [
+  {
+    path: "",
+    component: LandingPageComponent,
+  },
   {
     path: "home",
     component: DashboardLayoutComponent,
@@ -26,10 +31,6 @@ const routes: Routes = [
   {
     path: "login",
     component: LoginPageComponent,
-  },
-  {
-    path: "",
-    component: LandingPageComponent,
   },
 ];
 

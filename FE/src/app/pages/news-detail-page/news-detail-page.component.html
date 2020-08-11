@@ -17,7 +17,7 @@
                 <ul class="list-news">
                     <li *ngFor="let friend of news.friends">
                         <h5>
-                            <span class="type-event">{{friend.author}}</span>
+                            <span class="type-event">{{friend.category_name}}</span>
                             <a [routerLink]="[friend.url]" routerLinkActive="router-link-active">{{friend.title}}</a>
                             <span class="date-news">{{friend.created_date}}</span>
                         </h5>

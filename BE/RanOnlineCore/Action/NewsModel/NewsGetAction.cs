@@ -21,7 +21,11 @@ namespace RanOnlineCore.Action.NewsModel
 
         private IEnumerable<DTOGetPosts> GetNews(ObjectContext context)
         {
-            var categories = this.GetCategories(context).Select(x=>x.object_id);
+            var categories = this.GetCategories(context).Select(x=>x.object_id).ToList();
+            if(categories.Count == 0)
+            {
+                return new List<DTOGetPosts>();
+            }
             var strCategories = string.Join(",", categories);
             var builder = new StringBuilder();
             builder.Append("select wp_posts.*, attachment.guid as Thumb from wp_posts ");
@@ -52,7 +56,7 @@ namespace RanOnlineCore.Action.NewsModel
                 image = news.Thumb,
                 short_text = news.post_excerpt,
                 created_date = news.post_modified.ToString("dd-MM-yyyy HH:mm"),
-                url = $"/news/{news.ID}/{news.post_name}"
+                url = $"/home/news/{news.ID}/{news.post_name}"
             }));
         }
     }
