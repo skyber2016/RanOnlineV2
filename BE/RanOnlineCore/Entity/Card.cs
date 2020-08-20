@@ -16,7 +16,11 @@ namespace RanOnlineCore.Entity
         public string Seri { get; set; }
         public string Telco { get; set; }
         public string Username { get; set; }
-        public bool Status { get; set; }
+        public int Status { get; set; }
         public string Message { get; set; }
+        public string Sign { get; set; }
+        public DateTime CreateDate { get; set; }
+        public int TransactionId { get; set; }
+        public int Amount { get; set; }
     }
 }

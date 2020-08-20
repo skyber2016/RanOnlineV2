@@ -16,7 +16,7 @@ namespace RanOnlineCore.Action.CardModel
         public string telco { get; set; }
         public string code { get; set; }
         public string serial { get; set; }
-        public long amount { get; set; }
+        public int amount { get; set; }
         private string partner_id { get; set; }
         private string sign { get; set; }
         private string command { get; set; }
@@ -60,16 +60,18 @@ namespace RanOnlineCore.Action.CardModel
                 Id = this.UID,
                 Code = this.code,
                 Seri = this.serial,
-                Status = false,
+                Status = 0,
                 Telco = this.telco,
                 Username = context.User.Username,
-                Message = "Đang chờ khởi tạo"
+                Message = "Đang chờ khởi tạo",
+                CreateDate = DateTime.Now,
+                TransactionId = 0,
+                Amount = this.amount,
+                Sign = this.sign
             });
-            
         }
         private CardResult PostCard(ObjectContext context)
         {
-            
             var dic = new Dictionary<string, string>
             {
                 ["telco"] = telco,
@@ -92,12 +94,29 @@ namespace RanOnlineCore.Action.CardModel
                 Id = this.UID,
                 Code = this.code,
                 Seri = this.serial,
-                Status = result.status == 1,
+                Status = result.status,
                 Telco = this.telco,
                 Username = context.User.Username,
-                Message = result.message
+                Message = result.message,
+                CreateDate = DateTime.Now,
+                TransactionId = result.trans_id,
+                Amount = this.amount,
+                Sign = this.sign
             });
-            if(result.status != 1)
+            if(result.status == 1)
+            {
+                var user = context.RanUser.Get<UserInfo>(new UserInfo
+                {
+                    UserNum = (int)context.User.UserId
+                });
+                if (user != null)
+                {
+                    user.UserPoint2 = user.UserPoint2 ?? 0;
+                    user.UserPoint2 += result.amount / 1000;
+                    context.RanUser.Update(user);
+                }
+            }
+            else
             {
                 throw new BadRequestException(result.message);
             }
@@ -110,20 +129,7 @@ namespace RanOnlineCore.Action.CardModel
         }
         private string GenUID()
         {
-            string result = string.Empty;
-            var baseChars = "abcdefghiklmnopqrstuvxyj0123456789";
-            var value = (long)TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds;
-
-            int targetBase = baseChars.Length;
-
-            do
-            {
-                result = baseChars[(int)(value % targetBase)] + result;
-                value = value / targetBase;
-            }
-            while (value > 0);
-
-            return result;
+            return DateTime.Now.Ticks.ToString();
         }
     }
 }
