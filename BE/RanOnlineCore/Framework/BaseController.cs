@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using RanOnlineCore.Framework;
+using RanOnlineCore.Framework.Attributes;
 using System.Net;
 
 namespace Framework
@@ -11,6 +12,7 @@ namespace Framework
     [ApiController]
     [EnableCors]
     [Authorize]
+    [BlockDomain]
     public class BaseController : ControllerBase
     {
         public BaseController(IOptions<GlobalConfig> config)
