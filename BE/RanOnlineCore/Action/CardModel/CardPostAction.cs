@@ -111,8 +111,8 @@ namespace RanOnlineCore.Action.CardModel
                 });
                 if (user != null)
                 {
-                    user.UserPoint2 = user.UserPoint2 ?? 0;
-                    user.UserPoint2 += result.amount / 1000;
+                    user.UserPoint = user.UserPoint ?? 0;
+                    user.UserPoint += result.amount / 1000;
                     context.RanUser.Update(user);
                 }
             }

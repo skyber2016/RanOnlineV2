@@ -60,8 +60,8 @@ namespace RanOnlineCore.Action.CardModel
                         })).FirstOrDefault();
                         if (user != null)
                         {
-                            user.UserPoint2 = user.UserPoint2 ?? 0;
-                            user.UserPoint2 += card.Amount / 1000;
+                            user.UserPoint = user.UserPoint ?? 0;
+                            user.UserPoint += card.Amount / 1000;
                             context.RanUser.Update(user);
                         }
                     }
