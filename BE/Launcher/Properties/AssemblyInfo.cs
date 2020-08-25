@@ -7,13 +7,13 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Launcher")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Patcher")]
+[assembly: AssemblyDescription("Phan mem cap nhat")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Launcher")]
+[assembly: AssemblyCompany("No Company")]
+[assembly: AssemblyProduct("Patcher")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("cad0820b-43a6-4879-baf6-5129372dfc6f")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -52,4 +52,6 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: Guid("cad0820b-43a6-4879-baf6-5129372dfc6f")]
+[assembly: NeutralResourcesLanguage("vi-VN")]

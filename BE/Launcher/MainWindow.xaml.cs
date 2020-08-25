@@ -1,12 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -24,10 +27,22 @@ namespace Launcher
         private Stopwatch Watch { get; set; }
         public MainWindow()
         {
+            string[] args = Environment.GetCommandLineArgs();
+            var isValid =args.Where(item =>
+            {
+                Guid guid = Guid.NewGuid();
+                var isOk = Guid.TryParse(item, out guid);
+                return isOk;
+            }).ToArray();
+            if(isValid.Length == 0)
+            {
+                MessageBox.Show("Vui lòng KHÔNG vào game bằng file này!");
+                Environment.Exit(0);
+            }
             InitializeComponent();
         }
 
-        private string BaseAddress = "http://103.75.184.234";
+        private string BaseAddress = "https://admin.ranonlinevn.com";
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -57,8 +72,8 @@ namespace Launcher
             this.Dispatcher.Invoke(() =>
             {
                 this.gTotal.IsIndeterminate = false;
-                this.gTotal.Value = 100;
-                this.gCurrent.Value = 100;
+                this.gTotal.Value = this.gTotal.Maximum;
+                this.gCurrent.Value = this.gCurrent.Maximum;
                 this.txtCurrent.Content = "100%";
                 this.txtTotal.Content = "100%";
             });
@@ -265,6 +280,7 @@ namespace Launcher
         private bool IsSuccess = true;
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            this.UnZip(@"D:\my\RanOnlineV2\BE\Launcher\bin\Debug\e4a6d689-62d7-4f7f-888e-dce9a87ce579.zip");
             this.speed.Dispatcher.Invoke(() =>
             {
                 this.speed.Content = "Đang kết nối đến máy chủ...";
@@ -369,51 +385,67 @@ namespace Launcher
         }
         private void UnZip(string pathToZip)
         {
-            using (var zip = ZipFile.OpenRead(pathToZip))
+            var file = new FileInfo(pathToZip);
+            using (ZipFile archive = new ZipFile(file.OpenRead()))
             {
-                foreach (var file in zip.Entries)
+                archive.Password = file.Name.Replace(file.Extension,String.Empty);
+                foreach (ZipEntry zipEntry in archive)
                 {
                     try
                     {
-                        if (file.Name != "")
+                        if (!zipEntry.IsFile)
                         {
+                            // Ignore directories
+                            continue;
+                        }
+                        String entryFileName = zipEntry.Name;
+                        // to remove the folder from the entry:- entryFileName = Path.GetFileName(entryFileName);
+                        // Optionally match entrynames against a selection list here to skip as desired.
+                        // The unpacked length is available in the zipEntry.Size property.
+                        this.UpdateProgresText($"Extracting {entryFileName}{Environment.NewLine}");
+                        // 4K is optimum
+                        byte[] buffer = new byte[4096];
+                        Stream zipStream = archive.GetInputStream(zipEntry);
 
-                            this.UpdateProgresText($"Extracting {file.FullName}{Environment.NewLine}");
-                            file.ExtractToFile(file.FullName, true);
-                            this.txtTotal.Dispatcher.Invoke(() =>
+                        // Manipulate the output filename here as desired.
+                        String fullZipToPath = Path.Combine(Directory.GetCurrentDirectory(), entryFileName);
+                        string directoryName = Path.GetDirectoryName(fullZipToPath);
+
+                        if (directoryName.Length > 0)
+                        {
+                            Directory.CreateDirectory(directoryName);
+                        }
+
+                        // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
+                        // of the file, but does not waste memory.
+                        // The "using" will close the stream even if an exception occurs.
+                        using (FileStream streamWriter = File.Create(fullZipToPath))
+                        {
+                            StreamUtils.Copy(zipStream, streamWriter, buffer);
+                        }
+                        this.txtTotal.Dispatcher.Invoke(() =>
+                        {
+                            if (this.TotalFile == 0)
                             {
-                                if (this.TotalFile == 0)
-                                {
-                                    this.TotalFile = 1;
-                                }
-                                var per = (double)this.CurrentFile / this.TotalFile * 100;
-                                this.txtTotal.Content = (int)per + "%";
-                                this.speed.Content = $"{this.CurrentFile} / {this.TotalFile}";
-                                this.gTotal.Value = this.CurrentFile;
-                                ++this.CurrentFile;
-                            });
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(file.FullName);
-                        }
+                                this.TotalFile = 1;
+                            }
+                            var per = (double)this.CurrentFile / this.TotalFile * 100;
+                            this.txtTotal.Content = (int)per + "%";
+                            this.speed.Content = $"{this.CurrentFile} / {this.TotalFile}";
+                            this.gTotal.Value = this.CurrentFile;
+                            ++this.CurrentFile;
+                        });
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        using (var w = new StreamWriter("error.log", true))
-                        {
-                            w.WriteLine(ex.Message);
-                        }
                         this.IsSuccess = false;
                     }
+
                 }
             }
+            
             this.UpdateProgresText($"Cleaning... {Environment.NewLine}");
             File.Delete(pathToZip);
-            
-            
         }
-
     }
-    
 }

@@ -84,7 +84,7 @@ namespace Update
                 }
                 using (var w = new StreamWriter("Launcher.json"))
                 {
-                    w.Write(Hash("Launcher.exe"));
+                    w.Write(Hash("Patcher.exe"));
                 }
                 Console.WriteLine("SUCCESS");
             }
