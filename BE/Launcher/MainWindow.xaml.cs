@@ -280,7 +280,6 @@ namespace Launcher
         private bool IsSuccess = true;
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.UnZip(@"D:\my\RanOnlineV2\BE\Launcher\bin\Debug\e4a6d689-62d7-4f7f-888e-dce9a87ce579.zip");
             this.speed.Dispatcher.Invoke(() =>
             {
                 this.speed.Content = "Đang kết nối đến máy chủ...";

@@ -28,8 +28,8 @@ namespace CreateUpdate
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    string[] files = Directory.GetFiles(fbd.SelectedPath);
-                    this.compressDirectory(files);
+                    string[] files = Directory.GetFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories);
+                    this.compressDirectory(files, fbd.SelectedPath);
                     this.Run();
                 }
             }
@@ -48,7 +48,7 @@ namespace CreateUpdate
             var directory = Directory.GetDirectories(@"C:\xampp\htdocs\update\DATA").Select(x => new DirectoryInfo(x)).ToArray();
             return Convert.ToInt32(directory.LastOrDefault().Name);
         }
-        private void compressDirectory(string[] filenames)
+        private void compressDirectory(string[] filenames, string selectPath)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace CreateUpdate
 
                         // Using GetFileName makes the result compatible with XP
                         // as the resulting path is not absolute.
-                        ZipEntry entry = new ZipEntry(Path.GetFileName(file));
+                        ZipEntry entry = new ZipEntry(file.Replace(selectPath,""));
 
                         // Setup the entry data as required.
 
