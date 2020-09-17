@@ -19,12 +19,12 @@ rm -rf ./Deploy.zip
 mkdir Deploy
 echo 'Buiding back end'
 cd BE/RanOnlineCore && dotnet publish -o ./published -r linux-x64 && cd ../..
-echo 'copy source to server'
+#echo 'copy source to server'
 cd Deploy && mkdir BE
 cd ..
 cp -r ./BE/RanOnlineCore/bin/Debug/netcoreapp2.1/linux-x64/ ./Deploy/BE
-echo 'Building front-end'
+#echo 'Building front-end'
 #cd FE && npm i && npm run build && cd ..
-cp -r ./FE/dist/FE/ ./Deploy
+#cp -r ./FE/dist/FE/ ./Deploy
 echo 'zip file'
 7z a -tzip deploy.zip ./Deploy/*

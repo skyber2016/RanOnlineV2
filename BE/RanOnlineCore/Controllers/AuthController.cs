@@ -28,6 +28,7 @@ namespace RanOnlineCore.Controllers
 
         [HttpPost]
         [Route("register")]
+        [AllowAnonymous]
         public IActionResult Register([FromBody]RegisterAction action)
         {
             return MakeResult(action.Execute(CurrentObjectContext));
