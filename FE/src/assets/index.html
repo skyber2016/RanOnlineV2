@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Ran Online Việt Nam </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;515;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="/assets/css/landing.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 0px;
+            color: #777986;
+            min-width: 1000px;
+            margin: 0px auto;
+            /* background: url(./assets/images/bgd_footer.jpg) no-repeat bottom center #f2f2f2; */
+        }
+    </style>
+</head>
+
+<body style="font-family: 'Quicksand', sans-serif;" class="mat-typography">
+    <script>
+        var canvas_url =
+            "/";
+        var lib = {};
+    </script>
+    <div class="landing-page-container">
+        <div class="page">
+            <div class="wrapper_page">
+                <a href='/trang-chu'>
+                    <video id="my-video" preload="auto" autoplay loop muted="">
+                        <source src="/assets/videos/RongDen_Flash.webm" type="video/webm">
+                    </video>
+                </a>
+                <header id="header">
+                    <div class="wrapper_main">
+                        <a href='/trang-chu' class="server_new">
+                            <span></span>
+                        </a>
+                        <div class="logo">
+                            <a href='/trang-chu'></a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </header>
+                <section id="main">
+                    <div class="wrapper_main">
+                        <a href='/trang-chu'>
+                            <div class="slogan"></div>
+                        </a>
+    
+                    </div>
+                </section>
+                <audio id="player" controls="true" autoplay="true" loop="loop">
+                    <source src="/assets/videos/Intro_Music.mp3" type="audio/mp3">
+                </audio>
+                <span id="showmp3" class="btn_music"></span>
+                <span id="mutemp3" class="btn_music"></span>
+            </div>
+        </div>
+    </div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(()=>{
+			$('#showmp3').click(()=>{
+				document.getElementById('player').play();
+			});
+		});
+	</script>
+</body>
+
+</html>
